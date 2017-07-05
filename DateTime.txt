@@ -1,0 +1,23 @@
+<script type="text/javascript">
+tday=new Array("Pazar","Pazartesi","Sali","Çarsamba","Persembe","Cuma","Cumartesi");
+tmonth=new Array("Ocak","Subat","Mart","Nisan","Mayis","Haziran","Temmuz","Agustos","Eylül","Ekim","Kasim","Aralik");
+
+function GetClock(){
+var d=new Date();
+var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+if(nyear<1000) nyear+=1900;
+var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+if(nmin<=9) nmin="0"+nmin
+if(nsec<=9) nsec="0"+nsec;
+
+document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+"";
+}
+
+window.onload=function(){
+GetClock();
+setInterval(GetClock,1000);
+}
+</script>
+<div id="clockbox"></div>
+<div id="clockbox" style="font:14pt Arial; color:#FF0000;"></div>
+<div id="clockbox" style="text-align: center;"></div>

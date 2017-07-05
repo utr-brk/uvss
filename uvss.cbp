@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="uvss" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/uvss" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="menu" />
+					<Add library="ncurses" />
+					<Add library="wiringPi" />
+					<Add library="wiringPiDev" />
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/uvss" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Winit-self" />
+					<Add option="-Wredundant-decls" />
+					<Add option="-Wcast-align" />
+					<Add option="-Wundef" />
+					<Add option="-Wunreachable-code" />
+					<Add option="-Wall" />
+					<Add option="-Wno-unused-result" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="menu" />
+					<Add library="ncurses" />
+					<Add library="wiringPi" />
+					<Add library="wiringPiDev" />
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`pkg-config --cflags gtk+-3.0`" />
+		</Compiler>
+		<Linker>
+			<Add option="`pkg-config --libs gtk+-3.0`" />
+		</Linker>
+		<Unit filename="admin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="admin.h" />
+		<Unit filename="cn56b.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cn56b.h" />
+		<Unit filename="com.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="com.h" />
+		<Unit filename="config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="config.h" />
+		<Unit filename="ftp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ftp.h" />
+		<Unit filename="gunisigi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gunisigi.h" />
+		<Unit filename="httpd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="keyb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="keyb.h" />
+		<Unit filename="lcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lcd.h" />
+		<Unit filename="log.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="log.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.h" />
+		<Unit filename="mesaj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mesaj.h" />
+		<Unit filename="minglue.h" />
+		<Unit filename="minini.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="minini.h" />
+		<Unit filename="net.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="net.h" />
+		<Unit filename="personel.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="personel.h" />
+		<Unit filename="reader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="reader.h" />
+		<Unit filename="resource.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="resource.h" />
+		<Unit filename="sayac.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sayac.h" />
+		<Unit filename="serport.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="serport.h" />
+		<Unit filename="smm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="smm.h" />
+		<Unit filename="string_convert.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="string_convert.h" />
+		<Unit filename="tcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tcp.h" />
+		<Unit filename="timer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="timer.h" />
+		<Unit filename="tool.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tool.h" />
+		<Unit filename="watchdt.h" />
+		<Unit filename="yazici.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="yazici.h" />
+		<Unit filename="zamanis.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="zamanis.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
