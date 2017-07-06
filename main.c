@@ -335,6 +335,9 @@ unsigned char SerNo[8];
         gtk_printf(label1, "%s\nYEMEKHANE TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
     else if(rec_TERM.TERM_TIP == TERM_KAPI)
         gtk_printf(label1, "%s\nKAPI TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
+    //0.0.1
+    else if(rec_TERM.TERM_TIP == TERM_UVSS)
+        gtk_printf(label1, "%s\nARAÇ ALTI TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
     else
         gtk_printf(label1, "%s\n%s", PROG_VER, rec_TERM.IP_TERM);
     //2.0.0
@@ -402,6 +405,10 @@ LOOP:
     if(TERM_AKTIF){
         while(gtk_events_pending())
             gtk_main_iteration();
+        //0.0.1
+        if(rec_TERM.TERM_TIP == TERM_UVSS)
+            UVSS_Karsila();
+        else
         if(rezervasyon)
             REZERVASYON_Karsila();//rezervasyonlu calisma, GAZI UNV icin yapildi
         else

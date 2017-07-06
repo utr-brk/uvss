@@ -150,6 +150,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="tool.h" />
+		<Unit filename="uvss.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="watchdt.h" />
 		<Unit filename="yazici.c">
 			<Option compilerVar="CC" />

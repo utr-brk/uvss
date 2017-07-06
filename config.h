@@ -9,6 +9,10 @@
 #define	TERM_KAPI		0x01
 #define TERM_PARA       0x02
 #define TERM_HARCAMA    0x03
+//0.0.1
+//TERM_BAKIYE           0x04
+//TERM_SOSYALTESIS      0x05
+#define TERM_UVSS       0x06
 
 //aslinda buraya havuz giris ve
 //havuz cikis terminalleri eklenebilirdi.
@@ -36,7 +40,7 @@ typedef struct
 	unsigned char	ROLE;
 	unsigned char	ROLE_SN;
 	unsigned char	SENS;
-	unsigned char SENS_SN;
+	unsigned char   SENS_SN;
 }struct_READER;
 
 typedef struct
