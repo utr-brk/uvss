@@ -92,25 +92,26 @@ int KAPI_TCP_WAIT_TIME;
 
 void CONFIG_Load(void)
 {
-	FILE *inp;
+    FILE *inp;
 
-	char *ptr;
-	int   i;
-	char  rfkt[512], kntrl[512];
-	char  rez_file[13];
-	struct_date d;
-	//1.8.0
-	char tipp[17];
+    char *ptr;
+    int   i;
+    char  rfkt[512], kntrl[512];
+    char  rez_file[13];
+    struct_date d;
+    //1.8.0
+    char tipp[17];
 
-	//IPCONFIG_t IP_CONFIG;
+    //IPCONFIG_t IP_CONFIG;
 
 
-	memset(&rec_TERM,0x00,sizeof(rec_TERM));
-	memset(&rec_LIMIT,0x00,sizeof(rec_LIMIT));
+    memset(&rec_TERM,0x00,sizeof(rec_TERM));
+    memset(&rec_LIMIT,0x00,sizeof(rec_LIMIT));
     //1.7.0
     memset(Kart_Sifre, 0x00, sizeof(Kart_Sifre));
 
-    if(access(AYARLAR_INI, 0) == 0){
+    if(access(AYARLAR_INI, 0) == 0)
+    {
         //2.2.1
         TERM_AKTIF = (char) ini_getl("TERMINAL", "AKTIF", 1, AYARLAR_INI);
 
@@ -138,15 +139,12 @@ void CONFIG_Load(void)
         Okuyucu_TIP[0] = 0x0;
         if(strncmp("MIFARE", tipp, 6) == 0)
             Okuyucu_TIP[0] = 0x0;
-        else
-        if(strncmp("RF-ID", tipp, 5) == 0)
+        else if(strncmp("RF-ID", tipp, 5) == 0)
             Okuyucu_TIP[0] = 0x1;
         //2.0.0
-        else
-        if(strncmp("CN-MFR", tipp, 6) == 0)
+        else if(strncmp("CN-MFR", tipp, 6) == 0)
             Okuyucu_TIP[0] = 0x2;
-        else
-        if(strncmp("CN-KYB", tipp, 6) == 0)
+        else if(strncmp("CN-KYB", tipp, 6) == 0)
             Okuyucu_TIP[0] = 0x3;
 
         //2.0.0
@@ -170,15 +168,12 @@ void CONFIG_Load(void)
         Okuyucu_TIP[1] = 0x0;
         if(strncmp("MIFARE", tipp, 6) == 0)
             Okuyucu_TIP[1] = 0x0;
-        else
-        if(strncmp("RF-ID", tipp, 5) == 0)
+        else if(strncmp("RF-ID", tipp, 5) == 0)
             Okuyucu_TIP[1] = 0x1;
         //2.0.0
-        else
-        if(strncmp("CN-MFR", tipp, 6) == 0)
+        else if(strncmp("CN-MFR", tipp, 6) == 0)
             Okuyucu_TIP[1] = 0x2;
-        else
-        if(strncmp("CN-KYB", tipp, 6) == 0)
+        else if(strncmp("CN-KYB", tipp, 6) == 0)
             Okuyucu_TIP[1] = 0x3;
 
         //2.0.0
@@ -211,29 +206,29 @@ void CONFIG_Load(void)
         KAPI_TCP_WAIT_TIME = (int) ini_getl("SURELER", "KAPI_TCP_BEKLEME_SURESI", 2, AYARLAR_INI);
 
         rec_YAZICI.AKTIF = (char) ini_getl("YAZICI", "AKTIF", 0, AYARLAR_INI);
-		ini_gets("YAZICI", "ACIKLAMA1", "UTARIT UNIVERSITE YEMEKHANE TERMINALI", rec_YAZICI.ACIKLAMA1, sizearray(rec_YAZICI.ACIKLAMA1), AYARLAR_INI);
-		ini_gets("YAZICI", "ACIKLAMA2", "", rec_YAZICI.ACIKLAMA2, sizearray(rec_YAZICI.ACIKLAMA2), AYARLAR_INI);
-		ini_gets("YAZICI", "ACIKLAMA3", "", rec_YAZICI.ACIKLAMA3, sizearray(rec_YAZICI.ACIKLAMA3), AYARLAR_INI);
-		rec_YAZICI.TIP = (char) ini_getl("YAZICI", "TIPI", 0, AYARLAR_INI);
-		rec_YAZICI.KART_NO_BAS = (char) ini_getl("YAZICI", "KARTNO_BAS", 0, AYARLAR_INI);
-		//7.5.2
-		rec_YAZICI.SIRA_NO_BAS = (char) ini_getl("YAZICI", "SIRANO_BAS", 0, AYARLAR_INI);
-		rec_YAZICI.TEKNUSHA = (char) ini_getl("YAZICI","TEKNUSHA", 0, AYARLAR_INI); //yoksa ya da 0 ise 2 nusha basar, varsa ve 1 ise tek nusha basar
+        ini_gets("YAZICI", "ACIKLAMA1", "UTARIT UNIVERSITE YEMEKHANE TERMINALI", rec_YAZICI.ACIKLAMA1, sizearray(rec_YAZICI.ACIKLAMA1), AYARLAR_INI);
+        ini_gets("YAZICI", "ACIKLAMA2", "", rec_YAZICI.ACIKLAMA2, sizearray(rec_YAZICI.ACIKLAMA2), AYARLAR_INI);
+        ini_gets("YAZICI", "ACIKLAMA3", "", rec_YAZICI.ACIKLAMA3, sizearray(rec_YAZICI.ACIKLAMA3), AYARLAR_INI);
+        rec_YAZICI.TIP = (char) ini_getl("YAZICI", "TIPI", 0, AYARLAR_INI);
+        rec_YAZICI.KART_NO_BAS = (char) ini_getl("YAZICI", "KARTNO_BAS", 0, AYARLAR_INI);
+        //7.5.2
+        rec_YAZICI.SIRA_NO_BAS = (char) ini_getl("YAZICI", "SIRANO_BAS", 0, AYARLAR_INI);
+        rec_YAZICI.TEKNUSHA = (char) ini_getl("YAZICI","TEKNUSHA", 0, AYARLAR_INI); //yoksa ya da 0 ise 2 nusha basar, varsa ve 1 ise tek nusha basar
 
         KEYPAD_AKTIF = (char) ini_getl("KEYPAD","AKTIF", 0, AYARLAR_INI);
         KART_SIFRE_AKTIF = (char) ini_getl("KEYPAD","KART_SIFRE_AKTIF", 0, AYARLAR_INI);
 
         rec_HAVUZ.AKTIF = (char) ini_getl("HAVUZ", "AKTIF", 0, AYARLAR_INI);;
-		Para_Blok = '\x2'; //Havuzun parası 2. blokda duruyor.
-		HB_Blok = '\x1'; //Havuz Bilgisi Blogu = 1
-		rec_HAVUZ.CARPANI = (int) ini_getl("HAVUZ", "CARPANI", 1, AYARLAR_INI);
-		rec_HAVUZ.GIRIS = (char) ini_getl("HAVUZ","GIRIS", 1, AYARLAR_INI); //1=> Giris, 0=> Cikis
-		rec_HAVUZ.CEZA = (unsigned long) ini_getl("HAVUZ", "CEZASI", 0, AYARLAR_INI);
+        Para_Blok = '\x2'; //Havuzun parası 2. blokda duruyor.
+        HB_Blok = '\x1'; //Havuz Bilgisi Blogu = 1
+        rec_HAVUZ.CARPANI = (int) ini_getl("HAVUZ", "CARPANI", 1, AYARLAR_INI);
+        rec_HAVUZ.GIRIS = (char) ini_getl("HAVUZ","GIRIS", 1, AYARLAR_INI); //1=> Giris, 0=> Cikis
+        rec_HAVUZ.CEZA = (unsigned long) ini_getl("HAVUZ", "CEZASI", 0, AYARLAR_INI);
 
         //7.6.0
-		rec_LIMIT.AKTIF = (char) ini_getl("YEMEK_LIMITLERI", "AKTIF", 0, AYARLAR_INI);
-		rec_LIMIT.TURNIKE = (int) ini_getl("YEMEK_LIMITLERI", "TURNIKE_LIMIT", 0, AYARLAR_INI);
-		rec_LIMIT.MISAFIR = (int) ini_getl("YEMEK_LIMITLERI", "MISAFIR_LIMIT", 0, AYARLAR_INI);
+        rec_LIMIT.AKTIF = (char) ini_getl("YEMEK_LIMITLERI", "AKTIF", 0, AYARLAR_INI);
+        rec_LIMIT.TURNIKE = (int) ini_getl("YEMEK_LIMITLERI", "TURNIKE_LIMIT", 0, AYARLAR_INI);
+        rec_LIMIT.MISAFIR = (int) ini_getl("YEMEK_LIMITLERI", "MISAFIR_LIMIT", 0, AYARLAR_INI);
 
 
 //ini_gets("SIFRELER", "PERSONEL", "\xFE\xFB\x11\xAA\xBB\xCC", ( char *)rec_TERM.KEY_PERSONEL, sizearray(rec_TERM.KEY_PERSONEL), AYARLAR_INI);
@@ -248,7 +243,9 @@ void CONFIG_Load(void)
         //1.1.1
         //master key hicbir yerde olusturulmuyordu.
         memcpy(rec_TERM.KEY_MASTER,"\xFF\xFE\xFF\x11\x22\x33",6);
-    }else{
+    }
+    else
+    {
         inp=fopen(MAIN_CFG,"rb");
         if (inp==NULL)
         {
@@ -294,227 +291,240 @@ void CONFIG_Load(void)
             rec_TERM.LOG_KART_SAAT=3;
             rec_TERM.LOG_ALARM_SAAT=3;
             rec_TERM.LOG_TERM_SAAT=3;
-    //utr
+            //utr
             memcpy(rec_TERM.KEY_PERSONEL,"\xFE\xFB\x11\xAA\xBB\xCC",6);
             memcpy(rec_TERM.KEY_MASTER,"\xFF\xFE\xFF\x11\x22\x33",6);
             memcpy(rec_TERM.KEY_BAKIYE,"\xFF\xFF\xFF\xFF\xFF\xFF",6);
             memcpy(rec_TERM.KEY_TOPUP,"\xFF\xFF\xFF\xFF\xFF\xFF",6);
             //strcpy(rec_TERM.ADMIN_PASS,RESOURCE_ReadLine(113));
             strcpy(rec_TERM.ADMIN_PASS,"1111");
-        } else {
+        }
+        else
+        {
             fseek(inp,0,SEEK_SET);
             fread(&rec_TERM,sizeof(rec_TERM),1,inp);
             fclose(inp);
         }
-	}
-/*
-    //odroid
-    //buraları düzeltmeyi unutma
-	rec_TERM.READERS[0].AKTIF = 0x1;
-	rec_TERM.READERS[1].AKTIF = 0x0;
-    rec_TERM.READERS[0].ROLE = 0x1;
-    rec_TERM.READERS[0].ROLE_SN = 0x1;
-	net_ONLINE=0;
-	net_ONLINE_PARA = 0x01;
+    }
+    /*
+        //odroid
+        //buraları düzeltmeyi unutma
+    	rec_TERM.READERS[0].AKTIF = 0x1;
+    	rec_TERM.READERS[1].AKTIF = 0x0;
+        rec_TERM.READERS[0].ROLE = 0x1;
+        rec_TERM.READERS[0].ROLE_SN = 0x1;
+    	net_ONLINE=0;
+    	net_ONLINE_PARA = 0x01;
 
-	strcpy(rec_TERM.IP_TERM,"192.168.2.215");
-    strcpy(rec_TERM.IP_SUBNET,"255.255.255.0");
-    strcpy(rec_TERM.IP_GATEWAY,"192.168.2.1");
-    strcpy(rec_TERM.IP_SERVER,"192.168.2.38");
-    //rec_TERM.TERM_TIP = TERM_KAPI;
+    	strcpy(rec_TERM.IP_TERM,"192.168.2.215");
+        strcpy(rec_TERM.IP_SUBNET,"255.255.255.0");
+        strcpy(rec_TERM.IP_GATEWAY,"192.168.2.1");
+        strcpy(rec_TERM.IP_SERVER,"192.168.2.38");
+        //rec_TERM.TERM_TIP = TERM_KAPI;
 
-	//strcpy(IP_CONFIG.IP, rec_TERM.IP_TERM);
-	//strcpy(IP_CONFIG.Mask, rec_TERM.IP_SUBNET);
-	//strcpy(IP_CONFIG.GW, rec_TERM.IP_GATEWAY);
-	//strcpy(IP_CONFIG.Dns1, rec_TERM.IP_GATEWAY);
-	//IP_CONFIG.dhcp = 0;
-	//strcpy(IP_CONFIG.iface, "eth0");
-*/
-	//0.2.2
-	//Para Terminali ise her seferinde master kart okutulmalı,
-	//Yoksa Default Utarit keylerine döner.
-	if(rec_TERM.TERM_TIP != TERM_PARA){
-		inp=fopen(MASTER_KEY,"rb");
-		if (inp!=NULL)
-		{
-			fseek(inp,0,SEEK_SET);
-			fread(rec_TERM.KEY_BAKIYE,6,1,inp);
-			fread(rec_TERM.KEY_TOPUP,6,1,inp);
-			fread(rec_TERM.KEY_PERSONEL, 6, 1, inp);
-			fclose(inp);
-		}
-	}
-	//0.2.2
-	//main.cfg'den gelen key'leri degistirmek icin
-	if(rec_TERM.TERM_TIP == TERM_PARA){
-		memcpy(rec_TERM.KEY_PERSONEL,"\xFE\xFB\x11\xAA\xBB\xCC",6);
-		memcpy(rec_TERM.KEY_BAKIYE,"\xFF\xFF\xFF\xFF\xFF\xFE",6);
-		memcpy(rec_TERM.KEY_TOPUP,"\xFF\xFF\xFF\xFF\xFF\xFD",6);
-	}
+    	//strcpy(IP_CONFIG.IP, rec_TERM.IP_TERM);
+    	//strcpy(IP_CONFIG.Mask, rec_TERM.IP_SUBNET);
+    	//strcpy(IP_CONFIG.GW, rec_TERM.IP_GATEWAY);
+    	//strcpy(IP_CONFIG.Dns1, rec_TERM.IP_GATEWAY);
+    	//IP_CONFIG.dhcp = 0;
+    	//strcpy(IP_CONFIG.iface, "eth0");
+    */
+    //0.2.2
+    //Para Terminali ise her seferinde master kart okutulmalı,
+    //Yoksa Default Utarit keylerine döner.
+    if(rec_TERM.TERM_TIP != TERM_PARA)
+    {
+        inp=fopen(MASTER_KEY,"rb");
+        if (inp!=NULL)
+        {
+            fseek(inp,0,SEEK_SET);
+            fread(rec_TERM.KEY_BAKIYE,6,1,inp);
+            fread(rec_TERM.KEY_TOPUP,6,1,inp);
+            fread(rec_TERM.KEY_PERSONEL, 6, 1, inp);
+            fclose(inp);
+        }
+    }
+    //0.2.2
+    //main.cfg'den gelen key'leri degistirmek icin
+    if(rec_TERM.TERM_TIP == TERM_PARA)
+    {
+        memcpy(rec_TERM.KEY_PERSONEL,"\xFE\xFB\x11\xAA\xBB\xCC",6);
+        memcpy(rec_TERM.KEY_BAKIYE,"\xFF\xFF\xFF\xFF\xFF\xFE",6);
+        memcpy(rec_TERM.KEY_TOPUP,"\xFF\xFF\xFF\xFF\xFF\xFD",6);
+    }
 
-	Personel_Sektor = 99;
-	inp=fopen(SEKTOR_DAT,"rb");
-	if (inp!=NULL)
-	{
-		fseek(inp,0,SEEK_SET);
-		fread(&Para_Sektor,1,1,inp);
-		if((Para_Sektor >3) && (Para_Sektor < 10))
-		{
-			Para_Blok = '\x0';
-			YB_Sektor = Para_Sektor+1;
-			YB_Blok = '\x0';
-			//6.9.1
+    Personel_Sektor = 99;
+    inp=fopen(SEKTOR_DAT,"rb");
+    if (inp!=NULL)
+    {
+        fseek(inp,0,SEEK_SET);
+        fread(&Para_Sektor,1,1,inp);
+        if((Para_Sektor >3) && (Para_Sektor < 10))
+        {
+            Para_Blok = '\x0';
+            YB_Sektor = Para_Sektor+1;
+            YB_Blok = '\x0';
+            //6.9.1
             fread(&Personel_Sektor, 1, 1, inp);
             if((Personel_Sektor > 15) || (Personel_Sektor == Para_Sektor)
                     || (Personel_Sektor == YB_Sektor) || (Personel_Sektor == 0))
                 Personel_Sektor = 2;
-		}else
-		{
-			lcd_clean();
-			lcd_flip();
-			lcd_printf_ex(ALG_CENTER, 8, "SEKTOR BILGISI HATALI");
-			lcd_printf_ex(ALG_CENTER, 10, "STANDARD SEKTORLER");
-			lcd_printf_ex(ALG_CENTER, 12,  "KULLANILACAK!");
-			lcd_flip();
-			//MSJ_Ses("5343332313");
-			sleep(1);
-		    //odroid
-			//lcd_set_bk_color(COLOR_BLUE);
-			//renk ayarını unutma!
-			Para_Sektor = '\x1';
-			Para_Blok = '\x0';
-			YB_Sektor = '\x3';
-			YB_Blok = '\x0';
-			//6.9.1
+        }
+        else
+        {
+            lcd_clean();
+            lcd_flip();
+            lcd_printf_ex(ALG_CENTER, 8, "SEKTOR BILGISI HATALI");
+            lcd_printf_ex(ALG_CENTER, 10, "STANDARD SEKTORLER");
+            lcd_printf_ex(ALG_CENTER, 12,  "KULLANILACAK!");
+            lcd_flip();
+            //MSJ_Ses("5343332313");
+            sleep(1);
+            //odroid
+            //lcd_set_bk_color(COLOR_BLUE);
+            //renk ayarını unutma!
+            Para_Sektor = '\x1';
+            Para_Blok = '\x0';
+            YB_Sektor = '\x3';
+            YB_Blok = '\x0';
+            //6.9.1
             Personel_Sektor = '\x2';
-		}
-		//6.9.1 yukari alindi
-		/*
-		fread(&Personel_Sektor, 1, 1, inp);
-		if((Personel_Sektor > 15) || (Personel_Sektor == Para_Sektor))
-			Personel_Sektor = 2;
+        }
+        //6.9.1 yukari alindi
+        /*
+        fread(&Personel_Sektor, 1, 1, inp);
+        if((Personel_Sektor > 15) || (Personel_Sektor == Para_Sektor))
+        	Personel_Sektor = 2;
         */
-		fclose(inp);
-	}else
-	{
-		Personel_Sektor = '\x2';
-		Para_Sektor = '\x1';
-		Para_Blok = '\x0';
-		YB_Sektor = '\x3';
-		YB_Blok = '\x0';
-	}
+        fclose(inp);
+    }
+    else
+    {
+        Personel_Sektor = '\x2';
+        Para_Sektor = '\x1';
+        Para_Blok = '\x0';
+        YB_Sektor = '\x3';
+        YB_Blok = '\x0';
+    }
 
 //1.0.0
 //ayarlar.ini içine alındı
-/*
-	//6.0.0 havuz icin
-	memset(&rec_HAVUZ, 0x00,sizeof(rec_HAVUZ));
-	if(access(HAVUZ_INI, 0) == 0){
-		rec_HAVUZ.AKTIF = 1;
-		Para_Blok = '\x2'; //Havuzun parası 2. blokda duruyor.
-		HB_Blok = '\x1'; //Havuz Bilgisi Blogu = 1
-		rec_HAVUZ.CARPANI = (int) ini_getl(NULL, "CARPANI", 1, HAVUZ_INI);
-		rec_HAVUZ.GIRIS = (char) ini_getbool(NULL,"GIRIS", 1, HAVUZ_INI); //1=> Giris, 0=> Cikis
-		//6.4.0
-		rec_HAVUZ.CEZA = (unsigned long) ini_getl(NULL, "CEZASI", 0, HAVUZ_INI);
-	}
-*/
+    /*
+    	//6.0.0 havuz icin
+    	memset(&rec_HAVUZ, 0x00,sizeof(rec_HAVUZ));
+    	if(access(HAVUZ_INI, 0) == 0){
+    		rec_HAVUZ.AKTIF = 1;
+    		Para_Blok = '\x2'; //Havuzun parası 2. blokda duruyor.
+    		HB_Blok = '\x1'; //Havuz Bilgisi Blogu = 1
+    		rec_HAVUZ.CARPANI = (int) ini_getl(NULL, "CARPANI", 1, HAVUZ_INI);
+    		rec_HAVUZ.GIRIS = (char) ini_getbool(NULL,"GIRIS", 1, HAVUZ_INI); //1=> Giris, 0=> Cikis
+    		//6.4.0
+    		rec_HAVUZ.CEZA = (unsigned long) ini_getl(NULL, "CEZASI", 0, HAVUZ_INI);
+    	}
+    */
 
-/*
-//1.0.0
-//ayarlar.ini içine alındı
-	//6.1.0 yazici icin
-	memset(&rec_YAZICI, 0x00,sizeof(rec_YAZICI));
-	if(access(YAZICI_INI, 0) == 0){
-		rec_YAZICI.AKTIF = 1;
-		ini_gets("YAZICI", "ACIKLAMA1", "UTARIT UNIVERSITE YEMEKHANE TERMINALI", rec_YAZICI.ACIKLAMA1, sizearray(rec_YAZICI.ACIKLAMA1), YAZICI_INI);
-		ini_gets("YAZICI", "ACIKLAMA2", "", rec_YAZICI.ACIKLAMA2, sizearray(rec_YAZICI.ACIKLAMA2), YAZICI_INI);
-		ini_gets("YAZICI", "ACIKLAMA3", "", rec_YAZICI.ACIKLAMA3, sizearray(rec_YAZICI.ACIKLAMA3), YAZICI_INI);
-		ini_gets("YAZICI", "KART_NO_BAS", "BAS", rec_YAZICI.KART_NO_BAS, sizearray(rec_YAZICI.KART_NO_BAS), YAZICI_INI);
-		//rec_YAZICI.KART_NO_BAS = (int) ini_getl("YAZICI", "KART_NO_BAS", 0, YAZICI_INI); //1=> BAS, 0=> BASMA
-		//rec_YAZICI.TIP = (int)ini_getl("YAZICI","TIP", 5, YAZICI_INI); //0=> POS, 1=> EXTERNAL
-		ini_gets("YAZICI", "TIP", "POS", rec_YAZICI.TIP, sizearray(rec_YAZICI.TIP), YAZICI_INI);
-		rec_YAZICI.TEKNUSHA = (char)ini_getbool("YAZICI","TEKNUSHA", 0, YAZICI_INI); //0.2.0 yoksa ya da 0 ise 2 nusha basar, varsa ve 1 ise tek nusha basar
-		//debug_print("yazici tip: %s", rec_YAZICI.TIP);
-	}
-*/
+    /*
+    //1.0.0
+    //ayarlar.ini içine alındı
+    	//6.1.0 yazici icin
+    	memset(&rec_YAZICI, 0x00,sizeof(rec_YAZICI));
+    	if(access(YAZICI_INI, 0) == 0){
+    		rec_YAZICI.AKTIF = 1;
+    		ini_gets("YAZICI", "ACIKLAMA1", "UTARIT UNIVERSITE YEMEKHANE TERMINALI", rec_YAZICI.ACIKLAMA1, sizearray(rec_YAZICI.ACIKLAMA1), YAZICI_INI);
+    		ini_gets("YAZICI", "ACIKLAMA2", "", rec_YAZICI.ACIKLAMA2, sizearray(rec_YAZICI.ACIKLAMA2), YAZICI_INI);
+    		ini_gets("YAZICI", "ACIKLAMA3", "", rec_YAZICI.ACIKLAMA3, sizearray(rec_YAZICI.ACIKLAMA3), YAZICI_INI);
+    		ini_gets("YAZICI", "KART_NO_BAS", "BAS", rec_YAZICI.KART_NO_BAS, sizearray(rec_YAZICI.KART_NO_BAS), YAZICI_INI);
+    		//rec_YAZICI.KART_NO_BAS = (int) ini_getl("YAZICI", "KART_NO_BAS", 0, YAZICI_INI); //1=> BAS, 0=> BASMA
+    		//rec_YAZICI.TIP = (int)ini_getl("YAZICI","TIP", 5, YAZICI_INI); //0=> POS, 1=> EXTERNAL
+    		ini_gets("YAZICI", "TIP", "POS", rec_YAZICI.TIP, sizearray(rec_YAZICI.TIP), YAZICI_INI);
+    		rec_YAZICI.TEKNUSHA = (char)ini_getbool("YAZICI","TEKNUSHA", 0, YAZICI_INI); //0.2.0 yoksa ya da 0 ise 2 nusha basar, varsa ve 1 ise tek nusha basar
+    		//debug_print("yazici tip: %s", rec_YAZICI.TIP);
+    	}
+    */
     memset(&rec_Ayarlar, 0x00,sizeof(rec_Ayarlar));//burası mercure'de hatalı.
-	rec_Ayarlar.Refakatci_Kontrol = (char)ini_getl("HASTANE", "REFAKATCIKONTROL", 0, AYARLAR_INI);
-	if(rec_Ayarlar.Refakatci_Kontrol){
-		memset(rfkt, 0x0, sizeof(rfkt));
-		//7.5.0
-		//ini_gets(NULL, "REFAKATCI", "", rfkt, sizearray(rfkt), KONTROL_INI);
-		ini_gets("HASTANE", "REFAKATCI", "", rfkt, sizearray(rfkt), AYARLAR_INI);
+    rec_Ayarlar.Refakatci_Kontrol = (char)ini_getl("HASTANE", "REFAKATCIKONTROL", 0, AYARLAR_INI);
+    if(rec_Ayarlar.Refakatci_Kontrol)
+    {
+        memset(rfkt, 0x0, sizeof(rfkt));
+        //7.5.0
+        //ini_gets(NULL, "REFAKATCI", "", rfkt, sizearray(rfkt), KONTROL_INI);
+        ini_gets("HASTANE", "REFAKATCI", "", rfkt, sizearray(rfkt), AYARLAR_INI);
 
-		//disaridan iceri alinip, 128 ile sinirlandi
-		i = 0;
-		ptr = strtok(rfkt, ",");
-		while(ptr != NULL){
-			refakatci[i++] = atoi(ptr);
-			ptr = strtok(NULL, ",");
-			if(i ==128)
-				break;
-		}
-	}
-	rec_Ayarlar.Giris_Kontrol = (char)ini_getl("HASTANE", "GIRISKONTROL", 0, AYARLAR_INI);
-	if(rec_Ayarlar.Giris_Kontrol){
-		memset(kntrl, 0x0, sizeof(kntrl));
-		ini_gets("HASTANE", "KONTROLSUZ", "", kntrl, sizearray(kntrl), AYARLAR_INI);
-		i = 0;
-		ptr = strtok(kntrl, ",");
-		while(ptr != NULL){
-			kontrolsuz[i++] = atoi(ptr);
-			ptr = strtok(NULL, ",");
-			if(i ==128)
-				break;
-		}
-	}
+        //disaridan iceri alinip, 128 ile sinirlandi
+        i = 0;
+        ptr = strtok(rfkt, ",");
+        while(ptr != NULL)
+        {
+            refakatci[i++] = atoi(ptr);
+            ptr = strtok(NULL, ",");
+            if(i ==128)
+                break;
+        }
+    }
+    rec_Ayarlar.Giris_Kontrol = (char)ini_getl("HASTANE", "GIRISKONTROL", 0, AYARLAR_INI);
+    if(rec_Ayarlar.Giris_Kontrol)
+    {
+        memset(kntrl, 0x0, sizeof(kntrl));
+        ini_gets("HASTANE", "KONTROLSUZ", "", kntrl, sizearray(kntrl), AYARLAR_INI);
+        i = 0;
+        ptr = strtok(kntrl, ",");
+        while(ptr != NULL)
+        {
+            kontrolsuz[i++] = atoi(ptr);
+            ptr = strtok(NULL, ",");
+            if(i ==128)
+                break;
+        }
+    }
 
 
 //7.0.0
-	get_date(&d);
-	sprintf(rez_file, "%02d%02d%04d.rez", d.da_day, d.da_mon, d.da_year);
-	if(access(rez_file, 0) == 0)//rezervasyon dosyasi var
-		rezervasyon = 1;
-	else
-		rezervasyon = 0;
+    get_date(&d);
+    sprintf(rez_file, "%02d%02d%04d.rez", d.da_day, d.da_mon, d.da_year);
+    if(access(rez_file, 0) == 0)//rezervasyon dosyasi var
+        rezervasyon = 1;
+    else
+        rezervasyon = 0;
 
 
 //7.4.0
-	//memset(&rec_Ayarlar, 0x00,sizeof(rec_Ayarlar));
-	//7.5.0
-	//rec_Ayarlar.Grup_ID = (char) ini_getl("GRUP_ID","KONTROLLU", 5, AYARLAR_INI); //1=> Kontrollu, 0=> Kontrolsuz
-	//2.0.2
-	//rec_Ayarlar.Grup_ID = (char) ini_getl("OGUNKONTROLU","KONTROLLU", 0, AYARLAR_INI); //1=> Kontrollu, 0=> Kontrolsuz
+    //memset(&rec_Ayarlar, 0x00,sizeof(rec_Ayarlar));
+    //7.5.0
+    //rec_Ayarlar.Grup_ID = (char) ini_getl("GRUP_ID","KONTROLLU", 5, AYARLAR_INI); //1=> Kontrollu, 0=> Kontrolsuz
+    //2.0.2
+    //rec_Ayarlar.Grup_ID = (char) ini_getl("OGUNKONTROLU","KONTROLLU", 0, AYARLAR_INI); //1=> Kontrollu, 0=> Kontrolsuz
     rec_Ayarlar.Grup_ID = (char) ini_getl("OGUNKONTROLU","AKTIF", 0, AYARLAR_INI); //1=> Kontrollu, 0=> Kontrolsuz
 
     //2.1.0
-    if(access(ISKUR_INI, 0)==0){
+    if(access(ISKUR_INI, 0)==0)
+    {
         ISKUR = 1;
-    }else{
+    }
+    else
+    {
         ISKUR = 0;
     }
 
-	//rec_TERM.ONLINE_TEKRAR_DK=3;
-	//rec_TERM.TS_GUNCELLE_SAAT=1;
-	//silmeyi unutma m8110
-	//rec_TERM.TERM_TIP = TERM_YEMEKHANE;
-	//rec_TERM.TERM_TIP = TERM_PARA;
-	//rec_TERM.TERM_TIP = TERM_HARCAMA;
-	//strcpy(rec_TERM.IP_SERVER,"10.10.10.1");
-	//rec_TERM.PORT_SERVER = 4444;
+    //rec_TERM.ONLINE_TEKRAR_DK=3;
+    //rec_TERM.TS_GUNCELLE_SAAT=1;
+    //silmeyi unutma m8110
+    //rec_TERM.TERM_TIP = TERM_YEMEKHANE;
+    //rec_TERM.TERM_TIP = TERM_PARA;
+    //rec_TERM.TERM_TIP = TERM_HARCAMA;
+    //strcpy(rec_TERM.IP_SERVER,"10.10.10.1");
+    //rec_TERM.PORT_SERVER = 4444;
 }
 
 
 void	CONFIG_Save(void)
 {
-	FILE * out;
+    FILE * out;
 //	char szBuf[7];
 
-	remove(MAIN_CFG);
-	out=fopen(MAIN_CFG,"a+b");
-	fwrite(&rec_TERM,sizeof(rec_TERM),1,out);
-	fclose(out);
+    remove(MAIN_CFG);
+    out=fopen(MAIN_CFG,"a+b");
+    fwrite(&rec_TERM,sizeof(rec_TERM),1,out);
+    fclose(out);
 
 //1.0.0
     ini_puts("TERMINAL", "KOD", rec_TERM.KOD, AYARLAR_INI);
@@ -547,14 +557,19 @@ void	CONFIG_Save(void)
     else
         ini_puts("OKUYUCU1", "TIP", "RF-ID", AYARLAR_INI);
     */
-    switch(Okuyucu_TIP[0]){
-        case 0: ini_puts("OKUYUCU1", "TIP", "MIFARE", AYARLAR_INI);
+    switch(Okuyucu_TIP[0])
+    {
+    case 0:
+        ini_puts("OKUYUCU1", "TIP", "MIFARE", AYARLAR_INI);
         break;
-        case 1: ini_puts("OKUYUCU1", "TIP", "RF-ID", AYARLAR_INI);
+    case 1:
+        ini_puts("OKUYUCU1", "TIP", "RF-ID", AYARLAR_INI);
         break;
-        case 2: ini_puts("OKUYUCU1", "TIP", "CN-MFR", AYARLAR_INI);
+    case 2:
+        ini_puts("OKUYUCU1", "TIP", "CN-MFR", AYARLAR_INI);
         break;
-        case 3: ini_puts("OKUYUCU1", "TIP", "CN-KYB", AYARLAR_INI);
+    case 3:
+        ini_puts("OKUYUCU1", "TIP", "CN-KYB", AYARLAR_INI);
         break;
     }
 
@@ -578,14 +593,19 @@ void	CONFIG_Save(void)
     else
         ini_puts("OKUYUCU2", "TIP", "RF-ID", AYARLAR_INI);
     */
-    switch(Okuyucu_TIP[1]){
-        case 0: ini_puts("OKUYUCU2", "TIP", "MIFARE", AYARLAR_INI);
+    switch(Okuyucu_TIP[1])
+    {
+    case 0:
+        ini_puts("OKUYUCU2", "TIP", "MIFARE", AYARLAR_INI);
         break;
-        case 1: ini_puts("OKUYUCU2", "TIP", "RF-ID", AYARLAR_INI);
+    case 1:
+        ini_puts("OKUYUCU2", "TIP", "RF-ID", AYARLAR_INI);
         break;
-        case 2: ini_puts("OKUYUCU2", "TIP", "CN-MFR", AYARLAR_INI);
+    case 2:
+        ini_puts("OKUYUCU2", "TIP", "CN-MFR", AYARLAR_INI);
         break;
-        case 3: ini_puts("OKUYUCU2", "TIP", "CN-KYB", AYARLAR_INI);
+    case 3:
+        ini_puts("OKUYUCU2", "TIP", "CN-KYB", AYARLAR_INI);
         break;
     }
 
@@ -629,7 +649,7 @@ void	CONFIG_Save(void)
     ini_putl("YAZICI", "TIPI", rec_YAZICI.TIP, AYARLAR_INI);
     ini_putl("YAZICI", "KARTNO_BAS", rec_YAZICI.KART_NO_BAS , AYARLAR_INI);
     //7.5.2
-	ini_putl("YAZICI", "SIRANO_BAS", rec_YAZICI.SIRA_NO_BAS , AYARLAR_INI);
+    ini_putl("YAZICI", "SIRANO_BAS", rec_YAZICI.SIRA_NO_BAS , AYARLAR_INI);
     ini_putl("YAZICI","TEKNUSHA", rec_YAZICI.TEKNUSHA, AYARLAR_INI); //yoksa ya da 0 ise 2 nusha basar, varsa ve 1 ise tek nusha basar
 
     ini_putl("KEYPAD","AKTIF", KEYPAD_AKTIF, AYARLAR_INI);
@@ -662,27 +682,29 @@ void	CONFIG_Save(void)
     ini_puts("SIFRELER", "ADMIN", rec_TERM.ADMIN_PASS, AYARLAR_INI);
 
     //7.6.0
-	ini_putl("YEMEK_LIMITLERI", "AKTIF", rec_LIMIT.AKTIF, AYARLAR_INI);
-	ini_putl("YEMEK_LIMITLERI", "TURNIKE_LIMIT", rec_LIMIT.TURNIKE, AYARLAR_INI);
-	ini_putl("YEMEK_LIMITLERI", "MISAFIR_LIMIT", rec_LIMIT.MISAFIR, AYARLAR_INI);
+    ini_putl("YEMEK_LIMITLERI", "AKTIF", rec_LIMIT.AKTIF, AYARLAR_INI);
+    ini_putl("YEMEK_LIMITLERI", "TURNIKE_LIMIT", rec_LIMIT.TURNIKE, AYARLAR_INI);
+    ini_putl("YEMEK_LIMITLERI", "MISAFIR_LIMIT", rec_LIMIT.MISAFIR, AYARLAR_INI);
 
-	remove(MASTER_KEY);
-	//0.2.2
-	//para terminaliyse keyleri saklama.
-	if(rec_TERM.TERM_TIP != TERM_PARA){
-		out=fopen(MASTER_KEY,"a+b");
-		fwrite(rec_TERM.KEY_BAKIYE,6,1,out);
-		fwrite(rec_TERM.KEY_TOPUP,6,1,out);
-		fwrite(rec_TERM.KEY_PERSONEL,6,1,out);
-		fclose(out);
-	}
-	if((Para_Sektor >3) && (Para_Sektor < 10)){//0.1.0 standard sektorlerse sektor.dat yapma
-		//5.7.0 sektor bilgilerini yazmak icin
-		remove(SEKTOR_DAT);
-		out = fopen(SEKTOR_DAT,"a+b");
-		fwrite(&Para_Sektor,1,1,out);
-		fwrite(&Personel_Sektor,1,1,out);
-		fclose(out);
-	}
+    remove(MASTER_KEY);
+    //0.2.2
+    //para terminaliyse keyleri saklama.
+    if(rec_TERM.TERM_TIP != TERM_PARA)
+    {
+        out=fopen(MASTER_KEY,"a+b");
+        fwrite(rec_TERM.KEY_BAKIYE,6,1,out);
+        fwrite(rec_TERM.KEY_TOPUP,6,1,out);
+        fwrite(rec_TERM.KEY_PERSONEL,6,1,out);
+        fclose(out);
+    }
+    if((Para_Sektor >3) && (Para_Sektor < 10)) //0.1.0 standard sektorlerse sektor.dat yapma
+    {
+        //5.7.0 sektor bilgilerini yazmak icin
+        remove(SEKTOR_DAT);
+        out = fopen(SEKTOR_DAT,"a+b");
+        fwrite(&Para_Sektor,1,1,out);
+        fwrite(&Personel_Sektor,1,1,out);
+        fclose(out);
+    }
 }
 

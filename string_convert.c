@@ -40,13 +40,15 @@ const char *string_covert( const char *text, int textlen)
 
 int  string_len(const char * text)
 {
-	int retval = 0;
-	if (NULL != text){
-		while (*text){
-			text++;
-			retval++;
-		}
-	}
-	return retval;
+    int retval = 0;
+    if (NULL != text)
+    {
+        while (*text)
+        {
+            text++;
+            retval++;
+        }
+    }
+    return retval;
 }
 

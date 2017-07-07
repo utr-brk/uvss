@@ -24,7 +24,8 @@
 #define TIP_CN_MFR      0x2
 #define TIP_CN_KYB      0x3
 
-typedef struct{
+typedef struct
+{
     char iface[16];
     int dhcp;
     char IP[16];
@@ -36,93 +37,93 @@ typedef struct{
 
 typedef struct
 {
-	char	AKTIF;
-	unsigned char	ROLE;
-	unsigned char	ROLE_SN;
-	unsigned char	SENS;
-	unsigned char   SENS_SN;
-}struct_READER;
+    char	AKTIF;
+    unsigned char	ROLE;
+    unsigned char	ROLE_SN;
+    unsigned char	SENS;
+    unsigned char   SENS_SN;
+} struct_READER;
 
 typedef struct
 {
-	char			KOD[4];
-	char			ACIKLAMA[51];
-	char			TERM_TIP;
-	char			KAPI_KOD[4];
-	char			IP_TERM[16];
-	char			IP_SUBNET[16];
-	char			IP_GATEWAY[16];
-	char			IP_SERVER[16];
-	unsigned long	PORT_SERVER;
-	struct_READER	READERS[2];
-	unsigned char	SENS_CEVAP;
-	unsigned char	ALARM_SENS[2];
-	char			SES_OKUMA_OK[11];
-	char			SES_OKUMA_NK[11];
-	char			SES_IZIN_OK[11];
-	char			SES_IZIN_NK[11];
-	char			SES_TANIMSIZ[11];
-	char			MSJ_IZIN_OK[21];
-	char			MSJ_IZIN_NK[21];
-	char			MSJ_TANIMSIZ[21];
-	unsigned char	MSJ_SURE_SN;
-	unsigned char	ONLINE_TEKRAR_DK;
-	unsigned char	TS_GUNCELLE_SAAT;
-	unsigned char	LOG_KART_SAAT;
-	unsigned char	LOG_ALARM_SAAT;
-	unsigned char	LOG_TERM_SAAT;
-	char			ADMIN_CARD[11];
-	char			ADMIN_PASS[5];
-	unsigned char	KEY_PERSONEL[6];
-	unsigned char	KEY_MASTER[6];
-	unsigned char	KEY_BAKIYE[6];
-	unsigned char	KEY_TOPUP[6];
-}struct_TERM;
+    char			KOD[4];
+    char			ACIKLAMA[51];
+    char			TERM_TIP;
+    char			KAPI_KOD[4];
+    char			IP_TERM[16];
+    char			IP_SUBNET[16];
+    char			IP_GATEWAY[16];
+    char			IP_SERVER[16];
+    unsigned long	PORT_SERVER;
+    struct_READER	READERS[2];
+    unsigned char	SENS_CEVAP;
+    unsigned char	ALARM_SENS[2];
+    char			SES_OKUMA_OK[11];
+    char			SES_OKUMA_NK[11];
+    char			SES_IZIN_OK[11];
+    char			SES_IZIN_NK[11];
+    char			SES_TANIMSIZ[11];
+    char			MSJ_IZIN_OK[21];
+    char			MSJ_IZIN_NK[21];
+    char			MSJ_TANIMSIZ[21];
+    unsigned char	MSJ_SURE_SN;
+    unsigned char	ONLINE_TEKRAR_DK;
+    unsigned char	TS_GUNCELLE_SAAT;
+    unsigned char	LOG_KART_SAAT;
+    unsigned char	LOG_ALARM_SAAT;
+    unsigned char	LOG_TERM_SAAT;
+    char			ADMIN_CARD[11];
+    char			ADMIN_PASS[5];
+    unsigned char	KEY_PERSONEL[6];
+    unsigned char	KEY_MASTER[6];
+    unsigned char	KEY_BAKIYE[6];
+    unsigned char	KEY_TOPUP[6];
+} struct_TERM;
 
 typedef struct
 {
-	char		AKTIF;
-	//6.2.0 gereksizdi, kaldirdim.
+    char		AKTIF;
+    //6.2.0 gereksizdi, kaldirdim.
 //	unsigned char	ROLE;
 //	unsigned char	ROLE_SN;
 //	unsigned char	SENS;
 //	unsigned char SENS_SN;
-	char		GIRIS; 		//1=>Giris, 0=> Cikis
-	int			FIYAT; 		//sifirdan kucukse seans fiyatini al, sifir ve yukarisi ise bu fiyati al
-	int			CARPANI; 	//girerken kac kati para olsun kartta
-	unsigned int 	CEZA; 		//6.4.0 cikis yapmazsa ertesi gun kesilecek ceza
-}struct_HAVUZ; //6.0.0
+    char		GIRIS; 		//1=>Giris, 0=> Cikis
+    int			FIYAT; 		//sifirdan kucukse seans fiyatini al, sifir ve yukarisi ise bu fiyati al
+    int			CARPANI; 	//girerken kac kati para olsun kartta
+    unsigned int 	CEZA; 		//6.4.0 cikis yapmazsa ertesi gun kesilecek ceza
+} struct_HAVUZ; //6.0.0
 
 typedef struct
 {
-	char	AKTIF;
-	char 	TIP; //POS/CUSTOM
-	char  	ACIKLAMA1[24];
-	char  	ACIKLAMA2[24];
-	char  	ACIKLAMA3[24];
-	//int  	KART_NO_BAS;//6.3.1
-	//int		TIP; //0: POS, 1: EXTERNAL
-	//char 	KART_NO_BAS[10]; //BAS/BASMA
-	char 	KART_NO_BAS;//1:BAS, 0:BASMA
-	char 	SIRA_NO_BAS;//1:BAS, 0:BASMA
-	//char 	TIP[10]; //POS/CUSTOM
+    char	AKTIF;
+    char 	TIP; //POS/CUSTOM
+    char  	ACIKLAMA1[24];
+    char  	ACIKLAMA2[24];
+    char  	ACIKLAMA3[24];
+    //int  	KART_NO_BAS;//6.3.1
+    //int		TIP; //0: POS, 1: EXTERNAL
+    //char 	KART_NO_BAS[10]; //BAS/BASMA
+    char 	KART_NO_BAS;//1:BAS, 0:BASMA
+    char 	SIRA_NO_BAS;//1:BAS, 0:BASMA
+    //char 	TIP[10]; //POS/CUSTOM
 
-	char	TEKNUSHA; //0: 2 Nusha, 1: 1 Nusha bas //0.2.0
-}struct_YAZICI; //6.1.0
+    char	TEKNUSHA; //0: 2 Nusha, 1: 1 Nusha bas //0.2.0
+} struct_YAZICI; //6.1.0
 
 typedef struct
 {
-	char	AKTIF;
-	int		TIP; //reserved for future use:)
-}struct_PINPAD;
+    char	AKTIF;
+    int		TIP; //reserved for future use:)
+} struct_PINPAD;
 
 //7.4.0
 typedef struct
 {
-	char	Grup_ID; //1=>Kontrollu, 0=>Kontrolsuz
-	char	Refakatci_Kontrol;//7.6.2
-	char	Giris_Kontrol;//7.6.2
-}struct_AYARLAR;
+    char	Grup_ID; //1=>Kontrollu, 0=>Kontrolsuz
+    char	Refakatci_Kontrol;//7.6.2
+    char	Giris_Kontrol;//7.6.2
+} struct_AYARLAR;
 
 //7.6.0
 //TURNIKE: 0'dan buyukse o gn satilacak max yemek sayisi
@@ -130,10 +131,10 @@ typedef struct
 //icin onay istenecegi
 typedef struct
 {
-	char AKTIF;
-	int	 TURNIKE;
-	int  MISAFIR;
-}struct_LIMITS;
+    char AKTIF;
+    int	 TURNIKE;
+    int  MISAFIR;
+} struct_LIMITS;
 
 extern struct_AYARLAR rec_Ayarlar;
 

@@ -7,8 +7,8 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
- //1.4.1
- //asprintf uyarısını engellemek için
+//1.4.1
+//asprintf uyarısını engellemek için
 #define _GNU_SOURCE
 
 #include <gtk/gtk.h>
@@ -89,99 +89,102 @@ int inputs[6] = {1, 4, 5, 6, 0, 2};
 
 uint32_t aPower(unsigned long X,unsigned long Y)
 {
-	if (Y==0)
-	{
-		return 1;
-	} else {
-		return X * aPower(X,Y-1);
-	}
+    if (Y==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return X * aPower(X,Y-1);
+    }
 }
 
 uint32_t aHexToLong(char *Hex)
 {
-	char HEX_TABLE[17]="0123456789ABCDEF";
-	uint32_t r=0;
-	uint16_t i,l;
-	l=strlen(Hex);
-	i=l;
-	while (i>0)
-	{
-		r = r + aPower(16,l-i) * (strchr(HEX_TABLE,Hex[i-1])-HEX_TABLE);
-		i--;
-	}
-	return r;
+    char HEX_TABLE[17]="0123456789ABCDEF";
+    uint32_t r=0;
+    uint16_t i,l;
+    l=strlen(Hex);
+    i=l;
+    while (i>0)
+    {
+        r = r + aPower(16,l-i) * (strchr(HEX_TABLE,Hex[i-1])-HEX_TABLE);
+        i--;
+    }
+    return r;
 }
 
 uint16_t aHexToString(unsigned char *strHex, unsigned char *strByte)
 {
-	uint16_t L,i,j;
-	char * Hex;
+    uint16_t L,i,j;
+    char * Hex;
 
-	Hex = (char*) calloc(3, 1);
-	L=(int) strlen((const char *)strHex);
-	i=0;
-	j=0;
+    Hex = (char*) calloc(3, 1);
+    L=(int) strlen((const char *)strHex);
+    i=0;
+    j=0;
 
-	while (i<L)
-	{
-		memcpy(Hex,strHex+i,2);
-		strByte[j] = (unsigned char) aHexToLong(Hex);
-		i+=2;
-		j++;
-	}
-	free(Hex);
-	return j;
+    while (i<L)
+    {
+        memcpy(Hex,strHex+i,2);
+        strByte[j] = (unsigned char) aHexToLong(Hex);
+        i+=2;
+        j++;
+    }
+    free(Hex);
+    return j;
 }
 
 uint16_t aStringToHex(unsigned char *strByte,unsigned int Len, unsigned char *strHex)//m8110 unsigned char idiler
 {
-	uint16_t i;
-	strHex[0]=0x00;
-	for (i=0;i<Len;i++)
-		sprintf((char *)strHex+(i*2),"%02X",strByte[i]);
-	return i;
+    uint16_t i;
+    strHex[0]=0x00;
+    for (i=0; i<Len; i++)
+        sprintf((char *)strHex+(i*2),"%02X",strByte[i]);
+    return i;
 }
 
 
 int main_TS_Guncelle(void)
 {
-	struct_date dd;
-	struct_time tt;
-	struct tm * timeinfo;
-	time_t rawtime;
-	int ret = 0x0;
+    struct_date dd;
+    struct_time tt;
+    struct tm * timeinfo;
+    time_t rawtime;
+    int ret = 0x0;
 
-	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
 
-	mktime ( timeinfo );
+    mktime ( timeinfo );
 
-	if (TCP_GetDateTime(&dd,&tt)==0x01)
-	{
-		timeinfo->tm_year = (int) (dd.da_year - 1900);
-		timeinfo->tm_mon = (int) (dd.da_mon - 1);
-		timeinfo->tm_mday = (int) (dd.da_day);
-		timeinfo->tm_hour = (int) (tt.ti_hour);
-		timeinfo->tm_min = (int) (tt.ti_min);
-		timeinfo->tm_sec = (int)(tt.ti_sec);
-		rawtime = mktime ( timeinfo );
+    if (TCP_GetDateTime(&dd,&tt)==0x01)
+    {
+        timeinfo->tm_year = (int) (dd.da_year - 1900);
+        timeinfo->tm_mon = (int) (dd.da_mon - 1);
+        timeinfo->tm_mday = (int) (dd.da_day);
+        timeinfo->tm_hour = (int) (tt.ti_hour);
+        timeinfo->tm_min = (int) (tt.ti_min);
+        timeinfo->tm_sec = (int)(tt.ti_sec);
+        rawtime = mktime ( timeinfo );
 
-		if(stime(&rawtime))
-			printf("error setting date-time: %s\n", strerror(errno));
-		else{
-			lcd_printf(ALG_CENTER, "Date-Time Set: %02d/%02d/%04d, %02d:%02d:%02d", dd.da_day, dd.da_mon, dd.da_year, tt.ti_hour, tt.ti_min, tt.ti_sec);
-			lcd_flip();
+        if(stime(&rawtime))
+            printf("error setting date-time: %s\n", strerror(errno));
+        else
+        {
+            lcd_printf(ALG_CENTER, "Date-Time Set: %02d/%02d/%04d, %02d:%02d:%02d", dd.da_day, dd.da_mon, dd.da_year, tt.ti_hour, tt.ti_min, tt.ti_sec);
+            lcd_flip();
 
             //2.3.1
             //tarih/saat değişti, zamanlirole'yi yeniden başlat
             system("sudo pkill -9 -f zamanlirole");
             system("/home/odroid/Solidus/zamanlirole&");
 
-			ret = 0x1;
-		}
+            ret = 0x1;
+        }
 
-	}
-	return ret;
+    }
+    return ret;
 }
 
 //to exit properly when CTRL+C is pressed.
@@ -191,34 +194,36 @@ void INThandler(int sig)
     sig_flag = 1;
 }
 
-int main_solidus(void) {
+int main_solidus(void)
+{
 
-int i;
+    int i;
 //2.2.5
 //unsigned long long timer1dk;
-struct timeval timer1dk;
-unsigned long syc_dk=0;
+    struct timeval timer1dk;
+    unsigned long syc_dk=0;
 
 //1.6.2
-int FTP_SGNL;
+    int FTP_SGNL;
 
 //2.0.0
-unsigned char SerNo[8];
+    unsigned char SerNo[8];
 
     signal(SIGINT, INThandler);
 
     while(gtk_events_pending())
         gtk_main_iteration();
 
-	lcd_init();
-	lcd_clean();
-	lcd_printf(ALG_CENTER, "mercure EMV POS");
+    lcd_init();
+    lcd_clean();
+    lcd_printf(ALG_CENTER, "mercure EMV POS");
 
-	memset(&Hata,0,sizeof(Hata));
-	memset (&TopUP_ERR, 0, sizeof(TopUP_ERR));
+    memset(&Hata,0,sizeof(Hata));
+    memset (&TopUP_ERR, 0, sizeof(TopUP_ERR));
     lcd_printf(ALG_CENTER, "mercure supper POS");
 
-    if(wiringPiSetup() == -1){
+    if(wiringPiSetup() == -1)
+    {
         lcd_printf_ex(ALG_CENTER, 6, "wiringPiSetup() failure!");
         lcd_uninit();
     }
@@ -251,7 +256,7 @@ unsigned char SerNo[8];
     */
 
 
-	CONFIG_Load();
+    CONFIG_Load();
 
     while(gtk_events_pending())
         gtk_main_iteration();
@@ -263,58 +268,64 @@ unsigned char SerNo[8];
     //2.0.2
     //network ayarlarından sonra 500 ms daha bekle
     napms(500);
-	if(!main_TS_Guncelle()){
-		lcd_printf(ALG_CENTER, "BAGLANTI KURULAMIYOR");
-		lcd_flip();
-		//2.0.2
-		//tarih saat ayarlanamazsa
-		//500 ms bekle ve tekrar dene
-		napms(500);
-		if(main_TS_Guncelle())
+    if(!main_TS_Guncelle())
+    {
+        lcd_printf(ALG_CENTER, "BAGLANTI KURULAMIYOR");
+        lcd_flip();
+        //2.0.2
+        //tarih saat ayarlanamazsa
+        //500 ms bekle ve tekrar dene
+        napms(500);
+        if(main_TS_Guncelle())
             DATE_TIME_OK = 1;
-	}else{
-		lcd_printf(ALG_CENTER, "TARIH/SAAT AYARLANDI");
-		lcd_flip();
-		DATE_TIME_OK = 1;
-	}
+    }
+    else
+    {
+        lcd_printf(ALG_CENTER, "TARIH/SAAT AYARLANDI");
+        lcd_flip();
+        DATE_TIME_OK = 1;
+    }
 
 
-	ZAMANIS_Init();
+    ZAMANIS_Init();
 
-	LOG_Init();
+    LOG_Init();
 
-	READER_Init();
+    READER_Init();
 
-	lcd_clean();
+    lcd_clean();
     lcd_printf_ex(ALG_CENTER, 0, "MERCURE ODROID");
 
-	lcd_printf_ex(ALG_CENTER, 2, PROG_VER);
-	if(rec_HAVUZ.AKTIF){
-		if(rec_HAVUZ.GIRIS){
-			lcd_printf_ex(ALG_CENTER, 4, "HAVUZ::GIRIS");
-		}
-		else{
-			lcd_printf_ex(ALG_CENTER, 4, "%s HAVUZ::CIKIS");
-		}
-	}
+    lcd_printf_ex(ALG_CENTER, 2, PROG_VER);
+    if(rec_HAVUZ.AKTIF)
+    {
+        if(rec_HAVUZ.GIRIS)
+        {
+            lcd_printf_ex(ALG_CENTER, 4, "HAVUZ::GIRIS");
+        }
+        else
+        {
+            lcd_printf_ex(ALG_CENTER, 4, "%s HAVUZ::CIKIS");
+        }
+    }
 
-	lcd_printf_ex(ALG_CENTER, 8, rec_TERM.IP_TERM);
+    lcd_printf_ex(ALG_CENTER, 8, rec_TERM.IP_TERM);
 
-	lcd_flip();
-	SAYAC_Load();
+    lcd_flip();
+    SAYAC_Load();
 
-	MSJ_Goster(MSJ_TIP_LG);
-	MSJ_Ses(rec_TERM.SES_IZIN_OK);
+    MSJ_Goster(MSJ_TIP_LG);
+    MSJ_Ses(rec_TERM.SES_IZIN_OK);
 
 
-	if(rec_TERM.TERM_TIP == TERM_PARA)
-		flag_LOG_PARA=1;
-	else
-		flag_LOG_KART=1;
+    if(rec_TERM.TERM_TIP == TERM_PARA)
+        flag_LOG_PARA=1;
+    else
+        flag_LOG_KART=1;
 
-	//2.2.5
-	//timer1dk = Timer_Set(60L*1000L);
-	timer1dk = Set_Timer(60, 0);
+    //2.2.5
+    //timer1dk = Timer_Set(60L*1000L);
+    timer1dk = Set_Timer(60, 0);
 
 
     GdkRGBA font_color;
@@ -343,11 +354,13 @@ unsigned char SerNo[8];
     //2.0.0
     //brk aşağıyı silmeyi unutma
     //Okuyucu_TIP[0] = 3;
-    if((rec_TERM.READERS[0].AKTIF)&&((Okuyucu_TIP[0] ==2)||(Okuyucu_TIP[0] == 3))){
+    if((rec_TERM.READERS[0].AKTIF)&&((Okuyucu_TIP[0] ==2)||(Okuyucu_TIP[0] == 3)))
+    {
         CN56B_GetSerial(ifd[0], SerNo);
         gtk_printf(label1, "%s\nReader1: CN%s\n", gtk_label_get_label(GTK_LABEL(label1)),SerNo);
     }
-    if((rec_TERM.READERS[1].AKTIF)&&((Okuyucu_TIP[1] ==2)||(Okuyucu_TIP[1] == 3))){
+    if((rec_TERM.READERS[1].AKTIF)&&((Okuyucu_TIP[1] ==2)||(Okuyucu_TIP[1] == 3)))
+    {
         CN56B_GetSerial(ifd[1], SerNo);
         gtk_printf(label1, "%s\nReader2: CN%s\n", gtk_label_get_label(GTK_LABEL(label1)),SerNo);
     }
@@ -371,10 +384,11 @@ unsigned char SerNo[8];
 
 LOOP:
 
-	while(gtk_events_pending())
+    while(gtk_events_pending())
         gtk_main_iteration();
 
-    if(sig_flag){
+    if(sig_flag)
+    {
 
         READER_Uninit(COM1);
         READER_Uninit(COM2);
@@ -394,7 +408,8 @@ LOOP:
     }
 
     //2.2.5
-    if(!DATE_TIME_OK){
+    if(!DATE_TIME_OK)
+    {
         if(main_TS_Guncelle())
             DATE_TIME_OK = 1;
     }
@@ -402,18 +417,20 @@ LOOP:
 
     ZAMANIS_Kontrol();
     //2.2.1
-    if(TERM_AKTIF){
+    if(TERM_AKTIF)
+    {
         while(gtk_events_pending())
             gtk_main_iteration();
         //0.0.1
         if(rec_TERM.TERM_TIP == TERM_UVSS)
             UVSS_Karsila();
-        else
-        if(rezervasyon)
+        else if(rezervasyon)
             REZERVASYON_Karsila();//rezervasyonlu calisma, GAZI UNV icin yapildi
         else
             PERSONEL_Karsila();
-    }else{
+    }
+    else
+    {
         GdkRGBA font_color;
         font_color.alpha = 1;
         font_color.blue = 1;
@@ -430,7 +447,7 @@ LOOP:
         gtk_widget_override_font(label1, pango_font_description_from_string(big_font_name));
         gtk_printf(label1, "TERMİNAL KAPALI");
         //while(gtk_events_pending())
-          //  gtk_main_iteration();
+        //  gtk_main_iteration();
     }
 
     FTP_Kontrol();
@@ -473,8 +490,8 @@ LOOP:
         //1.9.4
         sleep(1);
         return 0;
-    }else
-    if (FTP_RESET == 0x2)
+    }
+    else if (FTP_RESET == 0x2)
     {
         READER_Uninit(COM1);
         READER_Uninit(COM2);
@@ -515,7 +532,8 @@ LOOP:
         gtk_info_bar_set_message_type (GTK_INFO_BAR (infobarr),GTK_MESSAGE_QUESTION);//GTK_MESSAGE_ERROR
         while(gtk_events_pending())
             gtk_main_iteration();
-        if(FTP_SGNL){
+        if(FTP_SGNL)
+        {
             MSJ_Ses(rec_TERM.SES_IZIN_OK);
             FTP_SGNL = 0;
         }
@@ -562,7 +580,8 @@ LOOP:
 
     //2.0.6
     //if(KEYPAD_AKTIF){
-    if(KEYPAD_AKTIF && ((Okuyucu_TIP[0] != TIP_CN_MFR) && (Okuyucu_TIP[0] != TIP_CN_KYB)) && ((Okuyucu_TIP[1] != TIP_CN_MFR) && (Okuyucu_TIP[1] != TIP_CN_KYB))){
+    if(KEYPAD_AKTIF && ((Okuyucu_TIP[0] != TIP_CN_MFR) && (Okuyucu_TIP[0] != TIP_CN_KYB)) && ((Okuyucu_TIP[1] != TIP_CN_MFR) && (Okuyucu_TIP[1] != TIP_CN_KYB)))
+    {
         if(ADMIN_Giris())
         {
 
@@ -624,7 +643,8 @@ LOOP:
         if(syc_dk==(rec_TERM.TS_GUNCELLE_SAAT*60))//Girilen Ayar Kadar
         {
             //sadece tarih saat set edilirse reboot et.
-            if(main_TS_Guncelle()){
+            if(main_TS_Guncelle())
+            {
                 sleep(1);
 
                 READER_Uninit(COM1);
@@ -637,24 +657,25 @@ LOOP:
                 sleep(1);
                 return 0;
             }
-            else{//2.2.7
+            else //2.2.7
+            {
                 DATE_TIME_OK = 0;
             }
         }
     }
 
-goto LOOP;
+    goto LOOP;
 
 
-	READER_Uninit(COM1);
+    READER_Uninit(COM1);
     READER_Uninit(COM2);
-	MSJ_Ses(rec_TERM.SES_IZIN_OK);
-	lcd_uninit();
-	//2.3.1
+    MSJ_Ses(rec_TERM.SES_IZIN_OK);
+    lcd_uninit();
+    //2.3.1
     //programdan çıkılıyor, zamanli role işine de son ver.
     system("sudo pkill -9 -f zamanlirole");
 
-	return 0;//EXIT_SUCCESS;
+    return 0;//EXIT_SUCCESS;
 }
 
 static void show_cb(GtkWidget *widget, gpointer data)
@@ -702,18 +723,19 @@ static void CreateTextBox(GtkWidget **entry, GtkWidget *layout)
 
 int main( int argc, char *argv[])
 {
-time_t rawtime;
-struct tm * timeinfo;
+    time_t rawtime;
+    struct tm * timeinfo;
 
     //1.6.0
     //solidus -v diye çağrılınca program versiyonunu söyler ve çıkar
-    if((argc == 2) && (memcmp(argv[1], "-v", 2) == 0)){
+    if((argc == 2) && (memcmp(argv[1], "-v", 2) == 0))
+    {
         printf("%s\n", PROG_VER);
         return 0;
     }
 
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
 
 //800x480
     window_width = 800;
@@ -806,7 +828,7 @@ struct tm * timeinfo;
     g_signal_connect(G_OBJECT(window), "show", G_CALLBACK(show_cb), NULL);
 
     g_signal_connect (G_OBJECT (window), "destroy",
-                        G_CALLBACK (gtk_main_quit), NULL);
+                      G_CALLBACK (gtk_main_quit), NULL);
     g_signal_connect_swapped(G_OBJECT(window), "delete-event", G_CALLBACK(gtk_widget_destroy), G_OBJECT(window));
 
 

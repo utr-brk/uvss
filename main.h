@@ -1008,27 +1008,27 @@ UVSS için değiştirilen versiyon.
 
 typedef struct
 {
-	uint16_t da_year;
-	char 	da_day;
-	char 	da_mon;
+    uint16_t da_year;
+    char 	da_day;
+    char 	da_mon;
 } struct_date;
 
 typedef struct
 {
-	unsigned char ti_min;
-	unsigned char ti_hour;
-	unsigned char ti_hund;
-	unsigned char ti_sec;
+    unsigned char ti_min;
+    unsigned char ti_hour;
+    unsigned char ti_hund;
+    unsigned char ti_sec;
 } struct_time;
 
 typedef struct
 {
-	char			KARTNO[4]; //m8110 unsigned char idi
-	struct_date		OKUMA_TARIH;
-	struct_time		OKUMA_ZAMAN;
-	char			ISLEM;//m8110 unsigned char idi
-	uint32_t		BAKIYE;
-	uint32_t		TUTAR;
+    char			KARTNO[4]; //m8110 unsigned char idi
+    struct_date		OKUMA_TARIH;
+    struct_time		OKUMA_ZAMAN;
+    char			ISLEM;//m8110 unsigned char idi
+    uint32_t		BAKIYE;
+    uint32_t		TUTAR;
 }
 struct_TCP_Para;
 

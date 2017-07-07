@@ -27,7 +27,8 @@ static unsigned int              font_color = COLOR_BLACK;
 
 //0.50
 //clears all of the lines
-void gtk_clean(void){
+void gtk_clean(void)
+{
     gtk_widget_override_color(label1, GTK_STATE_FLAG_NORMAL, NULL);//clear color
     gtk_widget_override_font(label1, NULL);//clear font
     gtk_label_set_text(GTK_LABEL(label1), "");
@@ -39,43 +40,46 @@ void gtk_clean(void){
 //    gtk_label_set_text(GTK_LABEL(label2), "");
 //    gtk_label_set_text(GTK_LABEL(label3), "");
 //    gtk_label_set_text(GTK_LABEL(label4), "");
- //   gtk_label_set_text(GTK_LABEL(label5), "");
+//   gtk_label_set_text(GTK_LABEL(label5), "");
 }
 
-void gtk_printf(GtkWidget *label_name, const char * pszFmt,...){
+void gtk_printf(GtkWidget *label_name, const char * pszFmt,...)
+{
 
     //int row, col, y, x;
-	char textbuf[4096];
+    char textbuf[4096];
 
-	va_list arg;
+    va_list arg;
 
-	va_start(arg, pszFmt);
-	vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
-	va_end (arg);
+    va_start(arg, pszFmt);
+    vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
+    va_end (arg);
 
     gtk_label_set_text(GTK_LABEL(label_name), textbuf);
-	/*
-	getmaxyx(stdscr, row, col); //get screen size
-	getyx(stdscr, y,x); //get current position
+    /*
+    getmaxyx(stdscr, row, col); //get screen size
+    getyx(stdscr, y,x); //get current position
     //printf("col: %d, row: %d, len: %d, pos: %d\n", col, row, strlen(textbuf), (col-strlen(textbuf))/2);
-	if (ALG_CENTER == alg)
+    if (ALG_CENTER == alg)
         mvprintw(y, (col - strlen(textbuf))/2, textbuf);
-	else if (ALG_LEFT == alg)
-		mvprintw(y, x, textbuf);
-	else
-		mvprintw(y, (col - strlen(textbuf)), textbuf);
+    else if (ALG_LEFT == alg)
+    	mvprintw(y, x, textbuf);
+    else
+    	mvprintw(y, (col - strlen(textbuf)), textbuf);
     printw("\n");
     */
 }
 
-int lcd_init(){
-	int retval = 0;
-	initscr();
+int lcd_init()
+{
+    int retval = 0;
+    initscr();
     curs_set(0);
-	return retval;
+    return retval;
 }
 
-void lcd_uninit(void){
+void lcd_uninit(void)
+{
     endwin();
 }
 /*
@@ -89,133 +93,137 @@ void lcd_set_font_color(unsigned int color){
 */
 
 //static int current_y = 1;
-void lcd_clean(void){
+void lcd_clean(void)
+{
     clear();
 }
 
-void lcd_printf(LCD_ALG alg, const char * pszFmt,...){
+void lcd_printf(LCD_ALG alg, const char * pszFmt,...)
+{
 
     int row, col, y, x;
-	char textbuf[4096];
+    char textbuf[4096];
 
 //	const char * pnewline = NULL;
 //	int str_length, temp_width;
-	va_list arg;
+    va_list arg;
 
 
 
-	va_start(arg, pszFmt);
-	vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
-	va_end (arg);
+    va_start(arg, pszFmt);
+    vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
+    va_end (arg);
 
-/*
-	main_surface->GetFont(main_surface, &font);
-	font->GetHeight(font, &font_height);
+    /*
+    	main_surface->GetFont(main_surface, &font);
+    	font->GetHeight(font, &font_height);
 
-	main_surface->GetSize(main_surface, &width, &height);
-	main_surface->SetColor(main_surface,
-			0xFF & (font_color>> 16),
-		0xFF & (font_color >> 8),
-		0xFF & (font_color >> 0),
-		0xFF & (font_color>>24));
+    	main_surface->GetSize(main_surface, &width, &height);
+    	main_surface->SetColor(main_surface,
+    			0xFF & (font_color>> 16),
+    		0xFF & (font_color >> 8),
+    		0xFF & (font_color >> 0),
+    		0xFF & (font_color>>24));
 
-	if (current_y + font_height > height){
-		rect.x = 0;
-		rect.y = current_y + font_height - height;
-		rect.w = width;
-		rect.h = current_y - rect.y;
-		main_surface->GetSubSurface (main_surface, &rect, &sub_surface);
+    	if (current_y + font_height > height){
+    		rect.x = 0;
+    		rect.y = current_y + font_height - height;
+    		rect.w = width;
+    		rect.h = current_y - rect.y;
+    		main_surface->GetSubSurface (main_surface, &rect, &sub_surface);
 
-	  	surfdesc.flags = DSDESC_CAPS | DSDESC_WIDTH | DSDESC_HEIGHT;
-		surfdesc.caps  = DSCAPS_SYSTEMONLY;
-		surfdesc.width = width;
-		surfdesc.height= height;
-	   dfb->CreateSurface(dfb, &surfdesc, &store_surface);
-	   store_surface->SetBlittingFlags(store_surface, 	DSBLIT_BLEND_ALPHACHANNEL);
-	   store_surface->Blit(store_surface, sub_surface, NULL, 0, 0);
-	   lcd_clean();
-	   main_surface->SetBlittingFlags(main_surface, 	DSBLIT_BLEND_ALPHACHANNEL);
-	   rect.y = 0;
-	   main_surface->Blit(main_surface, store_surface, &rect, 0, 0);
+    	  	surfdesc.flags = DSDESC_CAPS | DSDESC_WIDTH | DSDESC_HEIGHT;
+    		surfdesc.caps  = DSCAPS_SYSTEMONLY;
+    		surfdesc.width = width;
+    		surfdesc.height= height;
+    	   dfb->CreateSurface(dfb, &surfdesc, &store_surface);
+    	   store_surface->SetBlittingFlags(store_surface, 	DSBLIT_BLEND_ALPHACHANNEL);
+    	   store_surface->Blit(store_surface, sub_surface, NULL, 0, 0);
+    	   lcd_clean();
+    	   main_surface->SetBlittingFlags(main_surface, 	DSBLIT_BLEND_ALPHACHANNEL);
+    	   rect.y = 0;
+    	   main_surface->Blit(main_surface, store_surface, &rect, 0, 0);
 
-	   store_surface->Release(store_surface);
-	   sub_surface->Release(sub_surface);
-	   current_y = rect.h;
+    	   store_surface->Release(store_surface);
+    	   sub_surface->Release(sub_surface);
+    	   current_y = rect.h;
 
-	}
-
-
-	font->GetStringBreak(font, textbuf, strlen(textbuf), width -2, &temp_width, &str_length, &pnewline);
-
-	//utf8text = string_covert(textbuf, str_length);
-	//memcpy(utf8text, textbuf, str_length);//asagidaki textbuf^'lar utf8text idi
-
-	if (ALG_CENTER == alg)
-		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), width/2, current_y, DSTF_TOPCENTER);
-	else if (ALG_LEFT == alg)
-		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), 2, current_y, DSTF_TOPLEFT);
-	else
-		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), width, current_y, DSTF_TOPRIGHT);
+    	}
 
 
+    	font->GetStringBreak(font, textbuf, strlen(textbuf), width -2, &temp_width, &str_length, &pnewline);
 
-	current_y = current_y + font_height + 1;
+    	//utf8text = string_covert(textbuf, str_length);
+    	//memcpy(utf8text, textbuf, str_length);//asagidaki textbuf^'lar utf8text idi
+
+    	if (ALG_CENTER == alg)
+    		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), width/2, current_y, DSTF_TOPCENTER);
+    	else if (ALG_LEFT == alg)
+    		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), 2, current_y, DSTF_TOPLEFT);
+    	else
+    		main_surface->DrawString(main_surface, textbuf, string_len(textbuf), width, current_y, DSTF_TOPRIGHT);
 
 
-	if (NULL != pnewline)
-	{
-		lcd_printf(alg, pnewline);
-	}
-	*/
-	getmaxyx(stdscr, row, col); //get screen size
-	row++,
-	getyx(stdscr, y,x); //get current position
+
+    	current_y = current_y + font_height + 1;
+
+
+    	if (NULL != pnewline)
+    	{
+    		lcd_printf(alg, pnewline);
+    	}
+    	*/
+    getmaxyx(stdscr, row, col); //get screen size
+    row++,
+        getyx(stdscr, y,x); //get current position
     //printf("col: %d, row: %d, len: %d, pos: %d\n", col, row, strlen(textbuf), (col-strlen(textbuf))/2);
-	if (ALG_CENTER == alg)
+    if (ALG_CENTER == alg)
         mvprintw(y, (col - strlen(textbuf))/2, textbuf);
-	else if (ALG_LEFT == alg)
-		mvprintw(y, x, textbuf);
-	else
-		mvprintw(y, (col - strlen(textbuf)), textbuf);
+    else if (ALG_LEFT == alg)
+        mvprintw(y, x, textbuf);
+    else
+        mvprintw(y, (col - strlen(textbuf)), textbuf);
     printw("\n");
 }
 
-void lcd_printf_ex(LCD_ALG alg, int y, const char * pszFmt,...){
+void lcd_printf_ex(LCD_ALG alg, int y, const char * pszFmt,...)
+{
 
-	char textbuf[4096];
+    char textbuf[4096];
     int row, col, x;
-	va_list arg;
-	va_start(arg, pszFmt);
-	vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
-	va_end (arg);
-	/*current_y = y;
-	lcd_printf(alg, textbuf);
+    va_list arg;
+    va_start(arg, pszFmt);
+    vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
+    va_end (arg);
+    /*current_y = y;
+    lcd_printf(alg, textbuf);
     */
     x = getcurx(stdscr); //get current x position
     getmaxyx(stdscr, row, col); //get screen size
     row++;
-	//getyx(stdscr, y,x); //get current position
+    //getyx(stdscr, y,x); //get current position
     if (ALG_CENTER == alg)
         mvprintw(y, (col - strlen(textbuf))/2, textbuf);
-	else if (ALG_LEFT == alg)
-		mvprintw(y, x, textbuf);
-	else
-		mvprintw(y, (col - strlen(textbuf)), textbuf);
+    else if (ALG_LEFT == alg)
+        mvprintw(y, x, textbuf);
+    else
+        mvprintw(y, (col - strlen(textbuf)), textbuf);
 }
 
-void debug_print(const char * pszFmt,...){
+void debug_print(const char * pszFmt,...)
+{
 
-	char textbuf[4096];
+    char textbuf[4096];
 
-	va_list arg;
-	va_start(arg, pszFmt);
-	vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
-	va_end (arg);
-	//current_y = y;
-	lcd_printf(ALG_LEFT, textbuf);
-	lcd_flip();
-	//beep(500,300);
-	//get_keyms(1000);//kb_getkey();
+    va_list arg;
+    va_start(arg, pszFmt);
+    vsnprintf(textbuf, sizeof(textbuf), pszFmt, arg);
+    va_end (arg);
+    //current_y = y;
+    lcd_printf(ALG_LEFT, textbuf);
+    lcd_flip();
+    //beep(500,300);
+    //get_keyms(1000);//kb_getkey();
 }
 
 /*
@@ -374,19 +382,21 @@ void lcd_draw_point(unsigned int x, unsigned int y, unsigned int color){
 */
 
 
-void lcd_flip(void){
-	//main_surface->Flip(main_surface, NULL, 0);
-	refresh();
+void lcd_flip(void)
+{
+    //main_surface->Flip(main_surface, NULL, 0);
+    refresh();
 }
 
 
-int lcd_menu(const char * pszTitle, char *choices[], int n_choices, int select){
+int lcd_menu(const char * pszTitle, char *choices[], int n_choices, int select)
+{
 //	int retval = -1;
 
 //	int key;
 //	unsigned int i;
 //	int bLoop;
-	//IDirectFBFont * font = NULL;
+    //IDirectFBFont * font = NULL;
 //	unsigned int oldcolor = 0;
 
 
@@ -394,180 +404,184 @@ int lcd_menu(const char * pszTitle, char *choices[], int n_choices, int select){
 //	unsigned int     istart = 0;
 
 //	int screen_width, screen_height, font_height;
-/*
-	main_surface->GetSize(main_surface, &screen_width, &screen_height);
-	main_surface->GetFont(main_surface, &font);
-	font->GetHeight(font, &font_height);
-*/
-/*
-	if (select < 0)
-		select = 0;
+    /*
+    	main_surface->GetSize(main_surface, &screen_width, &screen_height);
+    	main_surface->GetFont(main_surface, &font);
+    	font->GetHeight(font, &font_height);
+    */
+    /*
+    	if (select < 0)
+    		select = 0;
 
-	if (count <= 0)
-		retval = -1;
-	else{
-		//led_set_brightness(LED_ARROW_DOWN,LED_BRIGHTNESS_MAX);
-		//led_set_brightness(LED_ARROW_UP,LED_BRIGHTNESS_MAX);
+    	if (count <= 0)
+    		retval = -1;
+    	else{
+    		//led_set_brightness(LED_ARROW_DOWN,LED_BRIGHTNESS_MAX);
+    		//led_set_brightness(LED_ARROW_UP,LED_BRIGHTNESS_MAX);
 
-		bLoop = 1;
-		while (1 == bLoop)
-		{
-			lcd_clean();
-			//lcd_printf(ALG_CENTER, "************************");//1.0.0.
-			lcd_printf(ALG_CENTER, pszTitle);
-			lcd_printf(ALG_CENTER, "************************");
-			lcd_printf(ALG_CENTER, ""); //m8110 menu item'ları etrafına çizdiği frame bozulmasın diye eklendi.
+    		bLoop = 1;
+    		while (1 == bLoop)
+    		{
+    			lcd_clean();
+    			//lcd_printf(ALG_CENTER, "************************");//1.0.0.
+    			lcd_printf(ALG_CENTER, pszTitle);
+    			lcd_printf(ALG_CENTER, "************************");
+    			lcd_printf(ALG_CENTER, ""); //m8110 menu item'ları etrafına çizdiği frame bozulmasın diye eklendi.
 
-			//max_lines = (screen_height - current_y - 1) / font_height;
-
-
-			istart = (select / max_lines) * max_lines;
-			for (i = 0;  i < max_lines; i++)
-			{
-				if (istart + i < count)
-				{
-					if (istart + i == select)
-					{
-						//oldcolor = font_color;
-						//lcd_set_font_color(COLOR_GREEN);
-						//lcd_draw_rectangle(1, current_y -1, screen_width -1, font_height +1);
-						lcd_printf(ALG_CENTER, menu[istart + i]); //m8110 left idi
-						//lcd_set_font_color(oldcolor);
-					}
-					else
-						lcd_printf(ALG_CENTER, menu[istart + i]); //m8110 left idi
+    			//max_lines = (screen_height - current_y - 1) / font_height;
 
 
-				}
-				else
-				{
-					break;
-				}
-			}
-			lcd_flip();
-	LOOP:
-			while ((key = getch()))
-			{
-				//key = kb_getkey();
-			//	printf("key:%02x\r\n", key);
-				switch((unsigned int)key)
-				{
-				case 0xF002://up arrow
-					select --;
-					if (select < 0)
-					{
-						select = count -1;
-					}
-					break;
-				case 0xF003://down arrow
-					select ++;
-					if (select >= count)
-					{
-						select = 0;
-					}
-					break;
-				case 0x1B://cancel
-					select = -1;
-					bLoop = 0;
-					break;
-				case 0x0D://enter
-					bLoop = 0;
-					break;
-				default:
-					goto LOOP;
-				}
-			}
-			//else
-			//
-			//	goto LOOP;
-			//}
+    			istart = (select / max_lines) * max_lines;
+    			for (i = 0;  i < max_lines; i++)
+    			{
+    				if (istart + i < count)
+    				{
+    					if (istart + i == select)
+    					{
+    						//oldcolor = font_color;
+    						//lcd_set_font_color(COLOR_GREEN);
+    						//lcd_draw_rectangle(1, current_y -1, screen_width -1, font_height +1);
+    						lcd_printf(ALG_CENTER, menu[istart + i]); //m8110 left idi
+    						//lcd_set_font_color(oldcolor);
+    					}
+    					else
+    						lcd_printf(ALG_CENTER, menu[istart + i]); //m8110 left idi
 
-		}
 
-		//led_set_brightness(LED_ARROW_DOWN,LED_BRIGHTNESS_MIN);
-		//led_set_brightness(LED_ARROW_UP,LED_BRIGHTNESS_MIN);
-	}
-	retval = select;
-	lcd_clean();
-	return retval;
-*/
-WINDOW *menu_win;
-        int highlight = 1;
-        int choice = 0;
-        int c;
-        int WIDTH = 30;
-        int HEIGHT = 10;
-        int startx = 0;
-        int starty = 0;
+    				}
+    				else
+    				{
+    					break;
+    				}
+    			}
+    			lcd_flip();
+    	LOOP:
+    			while ((key = getch()))
+    			{
+    				//key = kb_getkey();
+    			//	printf("key:%02x\r\n", key);
+    				switch((unsigned int)key)
+    				{
+    				case 0xF002://up arrow
+    					select --;
+    					if (select < 0)
+    					{
+    						select = count -1;
+    					}
+    					break;
+    				case 0xF003://down arrow
+    					select ++;
+    					if (select >= count)
+    					{
+    						select = 0;
+    					}
+    					break;
+    				case 0x1B://cancel
+    					select = -1;
+    					bLoop = 0;
+    					break;
+    				case 0x0D://enter
+    					bLoop = 0;
+    					break;
+    				default:
+    					goto LOOP;
+    				}
+    			}
+    			//else
+    			//
+    			//	goto LOOP;
+    			//}
 
-        initscr();
-        clear();
-        noecho();
-        cbreak();       /* Line buffering disabled. pass on everything */
-        startx = (40 - WIDTH) / 2;
-        starty = (25 - HEIGHT) / 2;
+    		}
 
-        menu_win = newwin(HEIGHT, WIDTH, starty, startx);
-        keypad(menu_win, TRUE);
-        mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
-        refresh();
-        lcd_print_menu(menu_win, pszTitle, choices, n_choices, highlight);
-        while(1)
-        {       c = wgetch(menu_win);
-                switch(c)
-                {       case KEY_UP:
-                                if(highlight == 1)
-                                        highlight = n_choices;
-                                else
-                                        --highlight;
-                                break;
-                        case KEY_DOWN:
-                                if(highlight == n_choices)
-                                        highlight = 1;
-                                else
-                                        ++highlight;
-                                break;
-                        case 10:
-                                choice = highlight;
-                                break;
-                        default:
-                                //mvprintw(20, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
-                                //refresh();
-                                break;
-                }
-                lcd_print_menu(menu_win, pszTitle, choices, n_choices, highlight);
-                if(choice != 0) /* User did a choice come out of the infinite loop */
-                        break;
+    		//led_set_brightness(LED_ARROW_DOWN,LED_BRIGHTNESS_MIN);
+    		//led_set_brightness(LED_ARROW_UP,LED_BRIGHTNESS_MIN);
+    	}
+    	retval = select;
+    	lcd_clean();
+    	return retval;
+    */
+    WINDOW *menu_win;
+    int highlight = 1;
+    int choice = 0;
+    int c;
+    int WIDTH = 30;
+    int HEIGHT = 10;
+    int startx = 0;
+    int starty = 0;
+
+    initscr();
+    clear();
+    noecho();
+    cbreak();       /* Line buffering disabled. pass on everything */
+    startx = (40 - WIDTH) / 2;
+    starty = (25 - HEIGHT) / 2;
+
+    menu_win = newwin(HEIGHT, WIDTH, starty, startx);
+    keypad(menu_win, TRUE);
+    mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
+    refresh();
+    lcd_print_menu(menu_win, pszTitle, choices, n_choices, highlight);
+    while(1)
+    {
+        c = wgetch(menu_win);
+        switch(c)
+        {
+        case KEY_UP:
+            if(highlight == 1)
+                highlight = n_choices;
+            else
+                --highlight;
+            break;
+        case KEY_DOWN:
+            if(highlight == n_choices)
+                highlight = 1;
+            else
+                ++highlight;
+            break;
+        case 10:
+            choice = highlight;
+            break;
+        default:
+            //mvprintw(20, 0, "Character pressed is = %3d Hopefully it can be printed as '%c'", c, c);
+            //refresh();
+            break;
         }
-        //mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
-        //clrtoeol();
-        //refresh();
-        //getch();
-        endwin();
-        return choice;
+        lcd_print_menu(menu_win, pszTitle, choices, n_choices, highlight);
+        if(choice != 0) /* User did a choice come out of the infinite loop */
+            break;
+    }
+    //mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
+    //clrtoeol();
+    //refresh();
+    //getch();
+    endwin();
+    return choice;
 }
 
 void lcd_print_menu(WINDOW *menu_win, const char * pszTitle, char *choices[], int count, int highlight)
 {
-        int x, y, i;
+    int x, y, i;
 
-        x = 2;
-        y = 2;
-        //box(menu_win, 0, 0);
-        wattron(menu_win, A_UNDERLINE|A_BOLD);
-        mvwprintw(menu_win, 0, x, "%s", pszTitle);
-        wattroff(menu_win, A_UNDERLINE|A_BOLD);
-        for(i = 0; i < count; ++i)
-        {       if(highlight == i + 1) /* High light the present choice */
-                {       wattron(menu_win, A_REVERSE);
-                        mvwprintw(menu_win, y, x, "%s", choices[i]);
-                        wattroff(menu_win, A_REVERSE);
-                }
-                else
-                        mvwprintw(menu_win, y, x, "%s", choices[i]);
-                ++y;
+    x = 2;
+    y = 2;
+    //box(menu_win, 0, 0);
+    wattron(menu_win, A_UNDERLINE|A_BOLD);
+    mvwprintw(menu_win, 0, x, "%s", pszTitle);
+    wattroff(menu_win, A_UNDERLINE|A_BOLD);
+    for(i = 0; i < count; ++i)
+    {
+        if(highlight == i + 1) /* High light the present choice */
+        {
+            wattron(menu_win, A_REVERSE);
+            mvwprintw(menu_win, y, x, "%s", choices[i]);
+            wattroff(menu_win, A_REVERSE);
         }
-        wrefresh(menu_win);
+        else
+            mvwprintw(menu_win, y, x, "%s", choices[i]);
+        ++y;
+    }
+    wrefresh(menu_win);
 }
 /*
 

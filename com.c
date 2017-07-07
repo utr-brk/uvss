@@ -21,34 +21,37 @@ ifd[com_port]
 unsigned char COM_init(int com_port, int *srl)
 {
 
-	switch(com_port){
-		//odroid
-		//aşağısını ttyS0 olarak değiştirmeyi unutma.
-		case COM1: srl[0] = serialOpen("/dev/ttyS0", Okuyucu_HIZ[0]);
-                    if(srl[0]<0) //CON5
-                        printf("error opening com1\n");
-                    //else
-                      //  printf("com1 opened");
-                    //1.8.0
-                    else
-                        serialFlush(srl[0]);
-                break;
-		case COM2: srl[1] =serialOpen("/dev/ttyS2", Okuyucu_HIZ[1]);//s2 olacak
-                    if(srl[1]<0)
-                        printf("error opening com2\n");
-                    //1.8.0
-                    else
-                        serialFlush(srl[1]);
-            break;//40-pin, #8 & #10
-		default:
-            break;
-	}
-	return 1;
+    switch(com_port)
+    {
+    //odroid
+    //aşağısını ttyS0 olarak değiştirmeyi unutma.
+    case COM1:
+        srl[0] = serialOpen("/dev/ttyS0", Okuyucu_HIZ[0]);
+        if(srl[0]<0) //CON5
+            printf("error opening com1\n");
+        //else
+        //  printf("com1 opened");
+        //1.8.0
+        else
+            serialFlush(srl[0]);
+        break;
+    case COM2:
+        srl[1] =serialOpen("/dev/ttyS2", Okuyucu_HIZ[1]);//s2 olacak
+        if(srl[1]<0)
+            printf("error opening com2\n");
+        //1.8.0
+        else
+            serialFlush(srl[1]);
+        break;//40-pin, #8 & #10
+    default:
+        break;
+    }
+    return 1;
 }
 
 void COM_uninit(int fd)
 {
-	serialClose(fd);
+    serialClose(fd);
 }
 
 /*
@@ -56,27 +59,27 @@ milli second cinsinden max kadar bekleyecek
 */
 unsigned int COM_avail(int fd,unsigned int max)
 {
-	//long ZA;
+    //long ZA;
     int r=0;
-	//time_t then;
+    //time_t then;
     struct timeval tNow, tLong, tEnd;
-	//time(&ftp_end_time);
-	//if(difftime(ftp_end_time, ftp_start_time) > FTP_TIME_OUT)
+    //time(&ftp_end_time);
+    //if(difftime(ftp_end_time, ftp_start_time) > FTP_TIME_OUT)
 
     //en fazla 200 msec bekle
-	if(max > 500) max = 500;//6.2.0 200 idi
-/*
-	ZA = AccTimer_SetTime(max);
+    if(max > 500) max = 500;//6.2.0 200 idi
+    /*
+    	ZA = AccTimer_SetTime(max);
 
-	while ((!r)&&(!AccTimer_IsTimeOut(ZA)))
-	{
-		r=SerPort_Avail(com_port);
-//		printf("serport avail: %d\n", r);
-//		if(SerPort_IsParityError(COM1) !=0 )
-//			printf("parity error\n");
+    	while ((!r)&&(!AccTimer_IsTimeOut(ZA)))
+    	{
+    		r=SerPort_Avail(com_port);
+    //		printf("serport avail: %d\n", r);
+    //		if(SerPort_IsParityError(COM1) !=0 )
+    //			printf("parity error\n");
 
-	}
-*/
+    	}
+    */
 //	printf("r1: %d\n", r);
 //	r=0;
 //	r=SerPort_Avail(com_port);
@@ -114,7 +117,7 @@ unsigned int COM_avail(int fd,unsigned int max)
 
     //lcd_printf(ALG_CENTER, "r:%d", r);
 
-	return r;
+    return r;
 }
 /*
 unsigned char COM_first_handshake(int fd)
@@ -174,32 +177,32 @@ unsigned int COM_ReadBuffer(int fd, unsigned char * Buffer)
 */
 char COM_SendBuffer(int fd,const char * Buffer,unsigned int Len)
 {
-	//if (SerPort_SendBuf(com_port,Buffer,Len))
-	//if (serialPuts(fd,Buffer))
-	//odroid
-	//serialPuts void ama değiştirmekte fayda var.
-	//write ne kadar yazdığını return etmiyor mu?
-	//ona göre kontrol ederek cevap dönsün
-	serialPuts(fd,Buffer);
-	//{
-	//	return 0x01;
-	//} else {
-		return 0x00;
-	//}
+    //if (SerPort_SendBuf(com_port,Buffer,Len))
+    //if (serialPuts(fd,Buffer))
+    //odroid
+    //serialPuts void ama değiştirmekte fayda var.
+    //write ne kadar yazdığını return etmiyor mu?
+    //ona göre kontrol ederek cevap dönsün
+    serialPuts(fd,Buffer);
+    //{
+    //	return 0x01;
+    //} else {
+    return 0x00;
+    //}
 }
 
 unsigned int COM_ReadBuff(int fd, char * Buffer, int adet)
 {
-unsigned int i, max;
-int c;
+    unsigned int i, max;
+    int c;
 
-	max = COM_avail(fd, 500);
-	if (max<adet) return 0;
+    max = COM_avail(fd, 500);
+    if (max<adet) return 0;
 
-    for(i=0;i<adet;i++)
-	{
-		c = serialGetchar(fd);
-		Buffer[i]=(char)c;
+    for(i=0; i<adet; i++)
+    {
+        c = serialGetchar(fd);
+        Buffer[i]=(char)c;
     }
-	return i;
+    return i;
 }

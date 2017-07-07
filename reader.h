@@ -18,13 +18,14 @@
 #define READER_RFID         0x03
 
 //2.0.4
-typedef struct{
-	char KART_NO[21];
-	char SICIL_NO[21];
-	char ADISOYADI[21];
-	char TZ_INOUT;
-	char TZ_ONOFF;
-	char MSJ_NO;
+typedef struct
+{
+    char KART_NO[21];
+    char SICIL_NO[21];
+    char ADISOYADI[21];
+    char TZ_INOUT;
+    char TZ_ONOFF;
+    char MSJ_NO;
 } PDKS_KART_Config;
 
 //2.4.0
