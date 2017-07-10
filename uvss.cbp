@@ -20,6 +20,7 @@
 					<Add library="wiringPi" />
 					<Add library="wiringPiDev" />
 					<Add library="pthread" />
+					<Add library="odbc" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -44,6 +45,7 @@
 					<Add library="wiringPi" />
 					<Add library="wiringPiDev" />
 					<Add library="pthread" />
+					<Add library="odbc" />
 				</Linker>
 			</Target>
 		</Build>
