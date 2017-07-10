@@ -21,7 +21,8 @@
 #include "zamanis.h"
 #include "sayac.h"
 #include "personel.h"
-#include "watchdt.h"
+//0.0.1
+//#include "watchdt.h"
 #include "main.h"
 #include "log.h"
 #include "personel.h"

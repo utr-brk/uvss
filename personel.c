@@ -28,7 +28,8 @@
 #include "log.h"
 #include "tcp.h"
 
-#include "watchdt.h"
+//0.0.1
+//#include "watchdt.h"
 #include "personel.h"
 //#include "resource.h"
 #include "reader.h"

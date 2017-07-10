@@ -56,6 +56,9 @@
 //2.0.0
 #include "cn56b.h"
 
+//0.0.1
+#include "uvss.h"
+
 char HTTP_RESET;
 
 volatile sig_atomic_t sig_flag = 0;
