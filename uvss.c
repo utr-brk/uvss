@@ -140,7 +140,8 @@ int UVSS_Vehicle_Check(int IN_OUT)
 			retval = 0;
 		break;
 	}
-	return retval;
+	//return retval;
+	return 1;
 }
 
 int UVSS_Send(int msg_type)
@@ -208,7 +209,8 @@ int UVSS_Send(int msg_type)
 	}
 
 	free(szBuf);
-	return retval;
+	//return retval;
+	return 1;
 
 }
 
@@ -305,7 +307,8 @@ int UVSS_Read(int msg_type)
 	}
 	//free(szBuf);
 	free(strRcv);
-	return retval;
+	//return retval;
+	return 1;
 }
 /*
 int SP_UVSS(int sp_type)
@@ -420,17 +423,16 @@ int SP_UVSS(int sp_type)
 
 
 
-	SQLCHAR ad[50];
-	SQLCHAR blm[50];
+	//SQLCHAR ad[50];
 
-	SQLINTEGER qq, sp_ret, sp_rtn, qw;
-	SQLINTEGER cbRtn;
-	SQLCHAR kart_no[20], sonuc[50];
-	SQLCHAR kodu[3];
-	SQLCHAR gc[1];
-	SQLDATE zmn;
-	SQLCHAR line1[200];
-	SQLCHAR line2[200];
+	SQLINTEGER sp_ret, sp_rtn;//, qw;
+	SQLINTEGER cbRtn, islem;
+	//SQLCHAR kart_no[20],;
+	SQLCHAR sonuc[50], org_file_name[500], hgs_tag[50];
+    SQLCHAR plaka_no[50],dosya_ismi[500],terminal_kodu[3],terminal_ip[15];
+
+	//SQLCHAR line1[200];
+	//SQLCHAR line2[200];
 	SQLINTEGER l1, l2, l3;//length of the returns
 	SQLSMALLINT columns;//number of the columns
 
@@ -456,26 +458,41 @@ int SP_UVSS(int sp_type)
 
 
 		SQLAllocHandle(SQL_HANDLE_STMT, h_dbc, &h_sp_stmt);
-
+/*
 		sp_ret = SQLBindParameter(h_sp_stmt, 1, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &sp_rtn, 0, &cbRtn);
 		sp_ret = SQLBindParameter(h_sp_stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 11, 0,kart_no, 11, NULL);
 		sp_ret = SQLBindParameter(h_sp_stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 30, 0,ad, 30, NULL);
 		sp_ret = SQLBindParameter(h_sp_stmt, 4, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 4, 0, &qw, 0, 0);
+*/
+        sp_ret = SQLBindParameter(h_sp_stmt, 1, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &sp_rtn, 0, &cbRtn);
+		sp_ret = SQLBindParameter(h_sp_stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 50, 0,plaka_no, 50, NULL);
+		sp_ret = SQLBindParameter(h_sp_stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 500, 0,dosya_ismi, 500, NULL);
+		sp_ret = SQLBindParameter(h_sp_stmt, 4, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 3, 0,terminal_kodu, 3, NULL);
+		sp_ret = SQLBindParameter(h_sp_stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 15, 0,terminal_ip, 15, NULL);
+		sp_ret = SQLBindParameter(h_sp_stmt, 6, SQL_PARAM_INPUT, SQL_C_SLONG, SQL_INTEGER, 4, 0, &islem, 0, 0);
 
 
 
+		//strcpy(kart_no, "474747474747");
+		//strcpy(ad, "DORUK DEFNE");
+		strcpy(plaka_no, "06EY4300");
+		strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");
+		strcpy(terminal_kodu, "17");
+		strcpy(terminal_ip, rec_TERM.IP_TERM);
+		islem = sp_type;
 
-		strcpy(kart_no, "474747474747");
-		strcpy(ad, "DORUK DEFNE");
-
-		sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SPO_1(?,?,'')}", SQL_NTS);
-		ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)line1, 50, &l1);
-		ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)line2, 50, &l2);
-		ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l3);
+		//sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SPO_1(?,?,'')}", SQL_NTS);
+		sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SP_ARAC_ALTI_SISTEMI(?,?,?,?,?)}", SQL_NTS);
+		//ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)line1, 50, &l1);
+		//ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)line2, 50, &l2);
+		//ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l3);
+		ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l1);
+		ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)org_file_name, 50, &l2);
+		ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)hgs_tag, 50, &l3);
 		ret = SQLFetch(h_sp_stmt);
 		sp_ret = SQLNumResultCols(h_sp_stmt, &columns);
 
-		printf("L1: %s\nL2: %s\nRS: %s\n", line1, line2, sonuc);
+		printf("\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", org_file_name, hgs_tag, sonuc);
 
     	if(sp_ret == SQL_ERROR)
 			retval = -1;
@@ -499,7 +516,7 @@ int SP_UVSS(int sp_type)
 	SQLFreeHandle(SQL_HANDLE_ENV, h_env);
 
 
-	return 1;
+	return retval;
 }
 
 void UVSS_Karsila(void)
@@ -511,8 +528,8 @@ void UVSS_Karsila(void)
 	case 0://not arrived yet
 		if(UVSS_Vehicle_Check(IN))//check the entry loop
 		{
-			UVSS_Send(CAR_DETECTED);//notify Bora that there starts a car
-			CAR_Ready = 1;
+			if(UVSS_Send(CAR_DETECTED) == 1)//notify Bora that there starts a car, what happens if it fails
+                CAR_Ready = 1;
 		}
 		break;
 	case 1://car is on, wait for LP and check if it is over
@@ -523,7 +540,7 @@ void UVSS_Karsila(void)
 				LP_Arrived = 1;
 				if(SP_UVSS(1)) //call the stored procedure to get the ref image file name (if exists)
 				{
-					UVSS_Send(REF_IMAGE);//send the corresponding reference image file name
+					UVSS_Send(REF_IMAGE);//send the corresponding reference image file name, what happens if it fails?
 				}
 			}
 		}
