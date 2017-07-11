@@ -118,6 +118,10 @@ void CONFIG_Load(void)
         ini_gets("TERMINAL", "KOD", "000", rec_TERM.KOD, sizearray(rec_TERM.KOD), AYARLAR_INI);
         ini_gets("TERMINAL", "ACIKLAMA", "UTARIT SOLIDUS TERMINAL", rec_TERM.ACIKLAMA, sizearray(rec_TERM.ACIKLAMA), AYARLAR_INI);
         rec_TERM.TERM_TIP = (char) ini_getl("TERMINAL", "TIPI", 0, AYARLAR_INI);
+        //brk
+        //unutma kaldır
+        //0.0.1
+        rec_TERM.TERM_TIP = TERM_UVSS;
         ini_gets("TERMINAL", "KAPIKODU", "000", rec_TERM.KAPI_KOD, sizearray(rec_TERM.KAPI_KOD), AYARLAR_INI);
 
         ini_gets("BAGLANTI", "IP", "192.168.1.150", rec_TERM.IP_TERM, sizearray(rec_TERM.IP_TERM), AYARLAR_INI);

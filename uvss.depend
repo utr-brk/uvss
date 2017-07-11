@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1453114368 source:/home/odroid/brk/uvss/admin.c
+1499427310 source:/home/odroid/brk/uvss/admin.c
 	<ncurses.h>
 	<menu.h>
 	<time.h>
@@ -17,18 +17,18 @@
 	<ncurses.h>
 	<gtk/gtk.h>
 
-1499358162 /home/odroid/brk/uvss/config.h
+1499427310 /home/odroid/brk/uvss/config.h
 	<gtk/gtk.h>
 
 1453988970 /home/odroid/brk/uvss/mesaj.h
 
-1487246764 /home/odroid/brk/uvss/personel.h
+1499427310 /home/odroid/brk/uvss/personel.h
 	"main.h"
 
-1499258538 /home/odroid/brk/uvss/main.h
+1499427309 /home/odroid/brk/uvss/main.h
 	"stdint.h"
 
-1488451720 source:/home/odroid/brk/uvss/config.c
+1499778357 source:/home/odroid/brk/uvss/config.c
 	<stdint.h>
 	<string.h>
 	<stdlib.h>
@@ -61,7 +61,7 @@
 1430507044 /home/odroid/brk/uvss/minglue.h
 	<stdio.h>
 
-1487243939 source:/home/odroid/brk/uvss/ftp.c
+1499427309 source:/home/odroid/brk/uvss/ftp.c
 	<stdlib.h>
 	<unistd.h>
 	"ftp.h"
@@ -78,7 +78,7 @@
 1448332541 /home/odroid/brk/uvss/log.h
 	"main.h"
 
-1430836215 source:/home/odroid/brk/uvss/gunisigi.c
+1499427311 source:/home/odroid/brk/uvss/gunisigi.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -89,7 +89,7 @@
 1448332541 /home/odroid/brk/uvss/gunisigi.h
 	<time.h>
 
-1451765582 source:/home/odroid/brk/uvss/lcd.c
+1499427310 source:/home/odroid/brk/uvss/lcd.c
 	"lcd.h"
 	<ncurses.h>
 	<stdio.h>
@@ -97,7 +97,7 @@
 	<stdarg.h>
 	"config.h"
 
-1498052672 source:/home/odroid/brk/uvss/log.c
+1499427312 source:/home/odroid/brk/uvss/log.c
 	<stdio.h>
 	<string.h>
 	"lcd.h"
@@ -115,7 +115,7 @@
 	<signal.h>
 	<malloc.h>
 
-1499358605 source:/home/odroid/brk/uvss/main.c
+1499698097 source:/home/odroid/brk/uvss/main.c
 	<gtk/gtk.h>
 	<sys/socket.h>
 	<sys/types.h>
@@ -155,10 +155,11 @@
 	<time.h>
 	<signal.h>
 	"cn56b.h"
+	"uvss.h"
 
 1448332542 /home/odroid/brk/uvss/zamanis.h
 
-1488798022 /home/odroid/brk/uvss/reader.h
+1499427311 /home/odroid/brk/uvss/reader.h
 
 1448332541 /home/odroid/brk/uvss/sayac.h
 	"main.h"
@@ -167,7 +168,7 @@
 
 1430507311 /home/odroid/brk/uvss/admin.h
 
-1488809917 source:/home/odroid/brk/uvss/mesaj.c
+1499427312 source:/home/odroid/brk/uvss/mesaj.c
 	"mesaj.h"
 	"lcd.h"
 	"tool.h"
@@ -182,14 +183,14 @@
 1464183769 /home/odroid/brk/uvss/tool.h
 	"main.h"
 
-1430687430 source:/home/odroid/brk/uvss/minini.c
+1499427313 source:/home/odroid/brk/uvss/minini.c
 	"minini.h"
 	<assert.h>
 	<ctype.h>
 	<string.h>
 	<stdlib.h>
 
-1498055304 source:/home/odroid/brk/uvss/personel.c
+1499683352 source:/home/odroid/brk/uvss/personel.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -211,7 +212,6 @@
 	"mesaj.h"
 	"log.h"
 	"tcp.h"
-	"watchdt.h"
 	"personel.h"
 	"reader.h"
 	"zamanis.h"
@@ -229,7 +229,7 @@
 
 1448332542 /home/odroid/brk/uvss/string_convert.h
 
-1498055304 source:/home/odroid/brk/uvss/reader.c
+1499427310 source:/home/odroid/brk/uvss/reader.c
 	<stdlib.h>
 	<string.h>
 	"reader.h"
@@ -247,14 +247,14 @@
 	"main.h"
 	"errno.h"
 
-1452178295 source:/home/odroid/brk/uvss/resource.c
+1499427312 source:/home/odroid/brk/uvss/resource.c
 	<stdlib.h>
 	<string.h>
 	<stdio.h>
 	"resource.h"
 	"lcd.h"
 
-1452178296 source:/home/odroid/brk/uvss/sayac.c
+1499427312 source:/home/odroid/brk/uvss/sayac.c
 	<string.h>
 	<stdio.h>
 	<stdlib.h>
@@ -264,13 +264,13 @@
 	"time.h"
 	"main.h"
 
-1430697504 source:/home/odroid/brk/uvss/string_convert.c
+1499427313 source:/home/odroid/brk/uvss/string_convert.c
 	"string_convert.h"
 	<malloc.h>
 	<stdio.h>
 	<memory.h>
 
-1499079998 source:/home/odroid/brk/uvss/tcp.c
+1499427311 source:/home/odroid/brk/uvss/tcp.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -298,14 +298,14 @@
 	<sys/time.h>
 	"tool.h"
 
-1464183753 source:/home/odroid/brk/uvss/tool.c
+1499427313 source:/home/odroid/brk/uvss/tool.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
 	<time.h>
 	"tool.h"
 
-1488809917 source:/home/odroid/brk/uvss/zamanis.c
+1499683353 source:/home/odroid/brk/uvss/zamanis.c
 	<stdio.h>
 	<time.h>
 	<string.h>
@@ -321,14 +321,13 @@
 	"zamanis.h"
 	"sayac.h"
 	"personel.h"
-	"watchdt.h"
 	"main.h"
 	"log.h"
 	"personel.h"
 	"tool.h"
 	"minini.h"
 
-1497459743 source:/home/odroid/brk/uvss/com.c
+1499427310 source:/home/odroid/brk/uvss/com.c
 	<stdio.h>
 	<time.h>
 	<sys/time.h>
@@ -342,7 +341,7 @@
 
 1497459046 /home/odroid/brk/uvss/com.h
 
-1431364260 source:/home/odroid/brk/uvss/serport.c
+1499427309 source:/home/odroid/brk/uvss/serport.c
 	<stdio.h>
 	<stdlib.h>
 	<stdint.h>
@@ -356,7 +355,7 @@
 	<sys/stat.h>
 	"wiringSerial.h"
 
-1497460721 source:/home/odroid/brk/uvss/smm.c
+1499427309 source:/home/odroid/brk/uvss/smm.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -376,7 +375,7 @@
 1481736158 /home/odroid/brk/uvss/smm.h
 	<stdint.h>
 
-1448316182 source:/home/odroid/brk/uvss/net.c
+1499427311 source:/home/odroid/brk/uvss/net.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -385,7 +384,7 @@
 
 1432113815 /home/odroid/brk/uvss/net.h
 
-1487245824 source:/home/odroid/brk/uvss/keyb.c
+1499427311 source:/home/odroid/brk/uvss/keyb.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -2961,14 +2960,14 @@
 1435723964 /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h
 	<gtk/gtkseparator.h>
 
-1487246765 source:/home/odroid/brk/uvss/httpd.c
+1499427311 source:/home/odroid/brk/uvss/httpd.c
 	<stdlib.h>
 	<unistd.h>
 	"main.h"
 
 1451427094 /home/odroid/brk/uvss/yazici.h
 
-1498055304 source:/home/odroid/brk/uvss/yazici.c
+1499427312 source:/home/odroid/brk/uvss/yazici.c
 	<stdlib.h>
 	<string.h>
 	<time.h>
@@ -2982,7 +2981,7 @@
 	"sayac.h"
 	"tool.h"
 
-1460137102 source:/home/odroid/brk/uvss/cn56b.c
+1499427312 source:/home/odroid/brk/uvss/cn56b.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -3001,4 +3000,46 @@
 1463345962 /home/odroid/brk/uvss/cn56b.h
 	<stdint.h>
 	"smm.h"
+
+1499698502 /home/odroid/brk/uvss/uvss.h
+
+1499768786 source:/home/odroid/brk/uvss/uvss.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<time.h>
+	<sys/time.h>
+	<unistd.h>
+	<sys/socket.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<netdb.h>
+	<unistd.h>
+	<errno.h>
+	<arpa/inet.h>
+	<fcntl.h>
+	<signal.h>
+	<sql.h>
+	<sqlext.h>
+	"tool.h"
+	"config.h"
+	"lcd.h"
+	"mesaj.h"
+	"log.h"
+	"tcp.h"
+	"personel.h"
+	"reader.h"
+	"zamanis.h"
+	"sayac.h"
+	"reader.h"
+	"serport.h"
+	"smm.h"
+	"keyb.h"
+	"timer.h"
+	"string_convert.h"
+	"yazici.h"
+	<wiringPi.h>
+	"cn56b.h"
+	"uvss.h"
+	"minini.h"
 
