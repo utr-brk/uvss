@@ -2,4 +2,4 @@
 
 This is a project that controls all of the peripherals of the UVSS.
 
-UTRAIT AS (c) 2017
+UTARIT AS (c) 2017
