@@ -421,18 +421,12 @@ int SP_UVSS(int sp_type)
 	SQLCHAR outstr[1024];
 	SQLSMALLINT outstrlen;
 
-
-
-	//SQLCHAR ad[50];
-
-	SQLINTEGER sp_ret, sp_rtn;//, qw;
+	SQLINTEGER sp_ret, sp_rtn;
 	SQLINTEGER cbRtn, islem;
-	//SQLCHAR kart_no[20],;
+
 	SQLCHAR sonuc[50], org_file_name[500], hgs_tag[50];
     SQLCHAR plaka_no[50],dosya_ismi[500],terminal_kodu[3],terminal_ip[15];
 
-	//SQLCHAR line1[200];
-	//SQLCHAR line2[200];
 	SQLINTEGER l1, l2, l3;//length of the returns
 	SQLSMALLINT columns;//number of the columns
 
@@ -447,6 +441,7 @@ int SP_UVSS(int sp_type)
 	                       SQL_NTS, outstr, sizeof(outstr), &outstrlen, SQL_DRIVER_COMPLETE);
 	if(SQL_SUCCEEDED(ret))
 	{
+		/*
 		printf("Connected\n");
 		printf("Returned connection string was:\n\t%s\n", outstr);
 		if (ret == SQL_SUCCESS_WITH_INFO)
@@ -454,16 +449,10 @@ int SP_UVSS(int sp_type)
 			printf("Driver reported the following diagnostics\n");
 			extract_error("SQLDriverConnect", h_dbc, SQL_HANDLE_DBC);
 		}
-
-
+        */
 
 		SQLAllocHandle(SQL_HANDLE_STMT, h_dbc, &h_sp_stmt);
-/*
-		sp_ret = SQLBindParameter(h_sp_stmt, 1, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &sp_rtn, 0, &cbRtn);
-		sp_ret = SQLBindParameter(h_sp_stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 11, 0,kart_no, 11, NULL);
-		sp_ret = SQLBindParameter(h_sp_stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 30, 0,ad, 30, NULL);
-		sp_ret = SQLBindParameter(h_sp_stmt, 4, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 4, 0, &qw, 0, 0);
-*/
+
         sp_ret = SQLBindParameter(h_sp_stmt, 1, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &sp_rtn, 0, &cbRtn);
 		sp_ret = SQLBindParameter(h_sp_stmt, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 50, 0,plaka_no, 50, NULL);
 		sp_ret = SQLBindParameter(h_sp_stmt, 3, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 500, 0,dosya_ismi, 500, NULL);
@@ -471,30 +460,33 @@ int SP_UVSS(int sp_type)
 		sp_ret = SQLBindParameter(h_sp_stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 15, 0,terminal_ip, 15, NULL);
 		sp_ret = SQLBindParameter(h_sp_stmt, 6, SQL_PARAM_INPUT, SQL_C_SLONG, SQL_INTEGER, 4, 0, &islem, 0, 0);
 
+		strcpy(plaka_no, "06EY4300");//comes from bora
 
+		if(sp_type == 1)
+            strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
+        else
+            memset(dosya_ismi, 0, 500);
 
-		//strcpy(kart_no, "474747474747");
-		//strcpy(ad, "DORUK DEFNE");
-		strcpy(plaka_no, "06EY4300");
-		strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");
-		strcpy(terminal_kodu, "17");
+		strcpy(terminal_kodu, rec_TERM.KAPI_KOD);
 		strcpy(terminal_ip, rec_TERM.IP_TERM);
 		islem = sp_type;
 
-		//sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SPO_1(?,?,'')}", SQL_NTS);
+        memset(sonuc, 0, 50);
+        memset(org_file_name, 0, 500);
+        memset(hgs_tag, 0, 50);
+
+
 		sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SP_ARAC_ALTI_SISTEMI(?,?,?,?,?)}", SQL_NTS);
-		//ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)line1, 50, &l1);
-		//ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)line2, 50, &l2);
-		//ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l3);
+
 		ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l1);
-		ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)org_file_name, 50, &l2);
+		ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)org_file_name, 500, &l2);
 		ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)hgs_tag, 50, &l3);
 		ret = SQLFetch(h_sp_stmt);
 		sp_ret = SQLNumResultCols(h_sp_stmt, &columns);
 
-		printf("\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", org_file_name, hgs_tag, sonuc);
+		printf("\nislem: %d\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", sp_type, org_file_name, hgs_tag, sonuc);
 
-    	if(sp_ret == SQL_ERROR)
+		if(sp_ret == SQL_ERROR)
 			retval = -1;
         else
             retval = 1;
