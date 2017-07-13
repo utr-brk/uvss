@@ -82,11 +82,15 @@ int CAR_Ready = 0;
 int LP_Arrived = 0;
 int UVSS_Ready = 0;
 int VEHICLE_Ready = 0;
+int UVSS_ON = 0;
 
-char REF_IMAGE_FILE[32];
-char LP_FILE_NAME[32];
-char UVSS_FILE_NAME[32];
+int uvss_socket = -1;
 
+char REF_IMAGE_FILE[256];
+char LP_FILE_NAME[256];
+char UVSS_FILE_NAME[256];
+
+char LPN[24];//license plate number
 /*
  * see Retrieving ODBC Diagnostics
  * for a definition of extract_error().
@@ -140,14 +144,14 @@ int UVSS_Vehicle_Check(int IN_OUT)
 			retval = 0;
 		break;
 	}
-	//return retval;
-	return 1;
+	return retval;
+	//return 1;
 }
 
 int UVSS_Send(int msg_type)
 {
 	int ref_file_len;
-	int uvss_socket;
+	//int uvss_socket;
 	//fd_set readset;
 	//int result, iof = -1;
 	//struct timeval tv;
@@ -162,13 +166,13 @@ int UVSS_Send(int msg_type)
 	case CAR_FINISHED:
 		sprintf(szBuf, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", 0x1, msg_type,
 		        0xff, 0xff, 0xff, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
-		uvss_socket = TCP_Connect(rec_TERM.IP_SERVER, rec_TERM.PORT_SERVER);
+		//uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
 		if (uvss_socket>0)
 		{
 			write(uvss_socket, szBuf, 16);
 
-			close(uvss_socket);
-			uvss_socket = -1;
+			//close(uvss_socket);
+			//uvss_socket = -1;
 		}
 		else
 			retval = -1;//sunucu yok
@@ -177,7 +181,7 @@ int UVSS_Send(int msg_type)
 	/*case CAR_FINISHED:
 		sprintf(szBuf, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", 0x1, CAR_FINISHED,
 		        0xff, 0xff, 0xff, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff);
-		uvss_socket = TCP_Connect(rec_TERM.IP_SERVER, rec_TERM.PORT_SERVER);
+		uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
 		if (uvss_socket>0)
 		{
 			write(uvss_socket, szBuf, strlen((char *)szBuf));
@@ -194,13 +198,13 @@ int UVSS_Send(int msg_type)
 		ref_file_len = strlen(REF_IMAGE_FILE);
 		sprintf(szBuf, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%d%s", 0x1, REF_IMAGE,
 		        0xff, 0xff, 0xff, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, ref_file_len, REF_IMAGE_FILE);
-		uvss_socket = TCP_Connect(rec_TERM.IP_SERVER, rec_TERM.PORT_SERVER);
+		//uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
 		if (uvss_socket>0)
 		{
 			write(uvss_socket, szBuf, 20+strlen((char *)REF_IMAGE_FILE));
 
-			close(uvss_socket);
-			uvss_socket = -1;
+			//close(uvss_socket);
+			//uvss_socket = -1;
 		}
 		else
 			retval = -1;//sunucu yok
@@ -209,28 +213,28 @@ int UVSS_Send(int msg_type)
 	}
 
 	free(szBuf);
-	//return retval;
-	return 1;
+	return retval;
+	//return 1;
 
 }
 
 int UVSS_Read(int msg_type)
 {
 	int rcv_file_len = 0;
-	int uvss_socket;
+	//int uvss_socket;
 	fd_set readset;
 	int result, iof = -1;
 	struct timeval tv;
 	char *strRcv;
 	//char *szBuf;
 
-	char rcv_file[32];
+	char rcv_file[256];
 
 	int retval = 1;
 	//szBuf = (char *) calloc(16, 1);
 	strRcv = ( char *) calloc (2049, 1);
 
-	uvss_socket = TCP_Connect(rec_TERM.IP_SERVER, rec_TERM.PORT_SERVER);
+	//uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
 	if (uvss_socket>0)
 	{
 		// Initialize the set
@@ -276,6 +280,7 @@ int UVSS_Read(int msg_type)
 			retval=1;
 			//Length is in result
 			//L = result;
+			memset(rcv_file, 0, 256);
 			memcpy(&rcv_file_len, strRcv+16, 4);
 			if (rcv_file_len > 0)
 			{
@@ -287,8 +292,8 @@ int UVSS_Read(int msg_type)
 			else
 				retval = -1;
 		}
-		close(uvss_socket);
-		uvss_socket = -1;
+		//close(uvss_socket);
+		//uvss_socket = -1;
 	}
 	else
 		retval = -1;
@@ -307,8 +312,8 @@ int UVSS_Read(int msg_type)
 	}
 	//free(szBuf);
 	free(strRcv);
-	//return retval;
-	return 1;
+	return retval;
+	//return 1;
 }
 /*
 int SP_UVSS(int sp_type)
@@ -460,10 +465,14 @@ int SP_UVSS(int sp_type)
 		sp_ret = SQLBindParameter(h_sp_stmt, 5, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_VARCHAR, 15, 0,terminal_ip, 15, NULL);
 		sp_ret = SQLBindParameter(h_sp_stmt, 6, SQL_PARAM_INPUT, SQL_C_SLONG, SQL_INTEGER, 4, 0, &islem, 0, 0);
 
-		strcpy(plaka_no, "06EY4300");//comes from bora
+
+		//LPN = strrstr(LP_FILE_NAME, "PTSG_");
+		//strcpy(plaka_no, "06EY4300");//comes from bora
+		strcpy(plaka_no, LPN);
 
 		if(sp_type == 1)
-            strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
+            //strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
+            strcpy(dosya_ismi, LP_FILE_NAME);//comes from bora
         else
             memset(dosya_ismi, 0, 500);
 
@@ -513,23 +522,35 @@ int SP_UVSS(int sp_type)
 
 void UVSS_Karsila(void)
 {
-
+char *q1, *q2;
+int len=0;
+    if(!UVSS_ON){
+        uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
+        if(uvss_socket > 0)
+            UVSS_ON = 1;
+    }
 
 	switch (CAR_Ready)
 	{
 	case 0://not arrived yet
 		if(UVSS_Vehicle_Check(IN))//check the entry loop
 		{
-			if(UVSS_Send(CAR_DETECTED) == 1)//notify Bora that there starts a car, what happens if it fails
+			if(UVSS_Send(CAR_DETECTED) == 1)//notify Bora that there starts a car. what happens if it fails
                 CAR_Ready = 1;
 		}
 		break;
 	case 1://car is on, wait for LP and check if it is over
 		if(!LP_Arrived)//if lp not read yet
 		{
-			if(UVSS_Read(LP_IMAGE))//try to read the lp image file name
+			if(UVSS_Read(LP_IMAGE))//try to read the lp image file name "C:\UTARIT\2017\7\13\PTSG_06ey4300_13072017161622.jpg"
 			{
 				LP_Arrived = 1;
+				q1 = strstr(LP_FILE_NAME, "PTSG_") + 5;
+                q2 = strstr(q1, "_");
+                len = q2-q1;
+                memcpy(LPN, q1, len);
+                LPN[len] = '\0';
+
 				if(SP_UVSS(1)) //call the stored procedure to get the ref image file name (if exists)
 				{
 					UVSS_Send(REF_IMAGE);//send the corresponding reference image file name, what happens if it fails?
@@ -548,7 +569,7 @@ void UVSS_Karsila(void)
 			}
 			else
 			{
-				if(UVSS_Read(UVSS_IMAGE))//image files are ready
+				if(UVSS_Read(UVSS_IMAGE))//image files are ready one by one, read all 12+1 of them
 				{
 					SP_UVSS(2);//call the stored procedure to notify that the files are ready
 					VEHICLE_Ready = 0;

@@ -17,7 +17,7 @@
 	<ncurses.h>
 	<gtk/gtk.h>
 
-1499427310 /home/odroid/brk/uvss/config.h
+1499947520 /home/odroid/brk/uvss/config.h
 	<gtk/gtk.h>
 
 1453988970 /home/odroid/brk/uvss/mesaj.h
@@ -28,7 +28,7 @@
 1499427309 /home/odroid/brk/uvss/main.h
 	"stdint.h"
 
-1499778357 source:/home/odroid/brk/uvss/config.c
+1499958341 source:/home/odroid/brk/uvss/config.c
 	<stdint.h>
 	<string.h>
 	<stdlib.h>
@@ -115,7 +115,7 @@
 	<signal.h>
 	<malloc.h>
 
-1499698097 source:/home/odroid/brk/uvss/main.c
+1499958216 source:/home/odroid/brk/uvss/main.c
 	<gtk/gtk.h>
 	<sys/socket.h>
 	<sys/types.h>
@@ -229,7 +229,7 @@
 
 1448332542 /home/odroid/brk/uvss/string_convert.h
 
-1499427310 source:/home/odroid/brk/uvss/reader.c
+1499958341 source:/home/odroid/brk/uvss/reader.c
 	<stdlib.h>
 	<string.h>
 	"reader.h"
@@ -3003,7 +3003,7 @@
 
 1499698502 /home/odroid/brk/uvss/uvss.h
 
-1499857393 source:/home/odroid/brk/uvss/uvss.c
+1499961440 source:/home/odroid/brk/uvss/uvss.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>

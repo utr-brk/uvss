@@ -45,6 +45,10 @@ struct_HAVUZ 	rec_HAVUZ; 	//6.0.0
 struct_YAZICI	rec_YAZICI; //6.1.0
 struct_TERM		rec_TERM;
 struct_PINPAD	rec_PINPAD;
+//3.0.0
+//Araç Altı Ayarları
+struct_UVSS		rec_UVSS;
+
 char			net_ONLINE;
 char			net_ONLINE_PARA;
 
@@ -110,6 +114,9 @@ void CONFIG_Load(void)
     //1.7.0
     memset(Kart_Sifre, 0x00, sizeof(Kart_Sifre));
 
+    //3.0.0
+    memset(&rec_UVSS,0x00,sizeof(rec_UVSS));
+
     if(access(AYARLAR_INI, 0) == 0)
     {
         //2.2.1
@@ -131,6 +138,10 @@ void CONFIG_Load(void)
         //1.9.4
         //rec_TERM.PORT_SERVER = (unsigned long) ini_getl("TERMINAL", "PORT", 4444, AYARLAR_INI);
         rec_TERM.PORT_SERVER = (unsigned long) ini_getl("BAGLANTI", "PORT", 4444, AYARLAR_INI);
+
+        //3.0.0
+        ini_gets("ARAC_ALTI", "SERVER", "192.168.1.216", rec_UVSS.IP_UVSS, sizearray(rec_UVSS.IP_UVSS), AYARLAR_INI);
+        rec_UVSS.PORT_UVSS = (unsigned long) ini_getl("ARAC_ALTI", "PORT", 1969, AYARLAR_INI);
 
         rec_TERM.READERS[0].AKTIF = (char) ini_getl("OKUYUCU1", "AKTIF", 1, AYARLAR_INI);
         rec_TERM.READERS[0].ROLE = (unsigned char) ini_getl("OKUYUCU1", "ROLE_AKTIF", 1, AYARLAR_INI);
@@ -545,6 +556,10 @@ void	CONFIG_Save(void)
     //1.9.5
     //ini_putl("TERMINAL", "PORT", rec_TERM.PORT_SERVER, AYARLAR_INI);
     ini_putl("BAGLANTI", "PORT", rec_TERM.PORT_SERVER, AYARLAR_INI);
+
+    //3.0.0
+    ini_puts("ARAC_ALTI", "SERVER", rec_UVSS.IP_UVSS, AYARLAR_INI);
+    ini_putl("ARAC_ALTI", "PORT", rec_UVSS.PORT_UVSS, AYARLAR_INI);
 
     ini_putl("OKUYUCU1", "AKTIF", rec_TERM.READERS[0].AKTIF, AYARLAR_INI);
     ini_putl("OKUYUCU1", "ROLE_AKTIF", rec_TERM.READERS[0].ROLE, AYARLAR_INI);

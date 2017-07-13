@@ -1033,6 +1033,9 @@ void READER_Uninit(int com_port)
         ifd [com_port]= -1;
     }
 
+    //3.0.0
+    //if(uvss_socket > 0)
+    //    close(uvss_socket);
 }
 
 

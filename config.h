@@ -136,12 +136,22 @@ typedef struct
     int  MISAFIR;
 } struct_LIMITS;
 
+//3.0.0
+typedef struct
+{
+    //char			AKTIF;
+    char			IP_UVSS[16];
+    unsigned long	PORT_UVSS;
+} struct_UVSS;
+
 extern struct_AYARLAR rec_Ayarlar;
 
 extern struct_PINPAD	rec_PINPAD;
 extern struct_YAZICI 	rec_YAZICI;
 extern struct_HAVUZ 	rec_HAVUZ;
 extern struct_TERM 		rec_TERM;
+//3.0.0
+extern struct_UVSS 		rec_UVSS;
 
 
 extern char				net_ONLINE;

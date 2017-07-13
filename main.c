@@ -674,6 +674,7 @@ LOOP:
     READER_Uninit(COM2);
     MSJ_Ses(rec_TERM.SES_IZIN_OK);
     lcd_uninit();
+
     //2.3.1
     //programdan çıkılıyor, zamanli role işine de son ver.
     system("sudo pkill -9 -f zamanlirole");
