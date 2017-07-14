@@ -158,7 +158,7 @@ int UVSS_Send(int msg_type)
 	char *szBuf;
 
 	int retval = 1;
-	szBuf = (char *) calloc(64, 1);
+	szBuf = (char *) calloc(512, 1);
 
 	switch(msg_type)
 	{
@@ -194,14 +194,15 @@ int UVSS_Send(int msg_type)
 
 		break;*/
 	case REF_IMAGE:
-		sprintf(REF_IMAGE_FILE, "%s", "PTSG_06fd2486_20171107140523");
+		//sprintf(REF_IMAGE_FILE, "%s", "PTSG_06fd2486_20171107140523");
 		ref_file_len = strlen(REF_IMAGE_FILE);
 		sprintf(szBuf, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%d%s", 0x1, REF_IMAGE,
 		        0xff, 0xff, 0xff, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, ref_file_len, REF_IMAGE_FILE);
 		//uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
 		if (uvss_socket>0)
 		{
-			write(uvss_socket, szBuf, 20+strlen((char *)REF_IMAGE_FILE));
+			//write(uvss_socket, szBuf, 20+strlen((char *)REF_IMAGE_FILE));
+			write(uvss_socket, szBuf, 20+ref_file_len);
 
 			//close(uvss_socket);
 			//uvss_socket = -1;
@@ -468,6 +469,14 @@ int SP_UVSS(int sp_type)
 
 		//LPN = strrstr(LP_FILE_NAME, "PTSG_");
 		//strcpy(plaka_no, "06EY4300");//comes from bora
+
+        memset(org_file_name, 0, 500);
+        memset(hgs_tag, 0, 50);
+        memset(sonuc, 0, 50);
+		memset(plaka_no, 0, 50);
+		memset(dosya_ismi, 0, 500);
+		memset(terminal_kodu, 0, 3);
+		memset(terminal_ip, 0, 15);
 		strcpy(plaka_no, LPN);
 
 		if(sp_type == 1)
@@ -494,6 +503,11 @@ int SP_UVSS(int sp_type)
 		sp_ret = SQLNumResultCols(h_sp_stmt, &columns);
 
 		printf("\nislem: %d\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", sp_type, org_file_name, hgs_tag, sonuc);
+
+		if(sp_type == 1){
+            memset(REF_IMAGE_FILE, 0, 500);
+            strcpy(REF_IMAGE_FILE, org_file_name);
+        }
 
 		if(sp_ret == SQL_ERROR)
 			retval = -1;
@@ -523,7 +537,7 @@ int SP_UVSS(int sp_type)
 void UVSS_Karsila(void)
 {
 char *q1, *q2;
-int len=0;
+int len=0, img_count;
     if(!UVSS_ON){
         uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
         if(uvss_socket > 0)
@@ -535,6 +549,7 @@ int len=0;
 	case 0://not arrived yet
 		if(UVSS_Vehicle_Check(IN))//check the entry loop
 		{
+            printf("\nCAR_DETECTED\n");
 			if(UVSS_Send(CAR_DETECTED) == 1)//notify Bora that there starts a car. what happens if it fails
                 CAR_Ready = 1;
 		}
@@ -542,7 +557,7 @@ int len=0;
 	case 1://car is on, wait for LP and check if it is over
 		if(!LP_Arrived)//if lp not read yet
 		{
-			if(UVSS_Read(LP_IMAGE))//try to read the lp image file name "C:\UTARIT\2017\7\13\PTSG_06ey4300_13072017161622.jpg"
+			if(UVSS_Read(LP_IMAGE) == 1)//try to read the lp image file name "C:\UTARIT\2017\7\13\PTSG_06ey4300_13072017161622.jpg"
 			{
 				LP_Arrived = 1;
 				q1 = strstr(LP_FILE_NAME, "PTSG_") + 5;
@@ -563,19 +578,29 @@ int len=0;
 			{
 				if(UVSS_Vehicle_Check(OUT))//check the exit loop
 				{
+                    printf("\nCAR_FINISHED\n");
 					UVSS_Send(CAR_FINISHED);//notify that car finished
 					VEHICLE_Ready = 1;//now car is ready, wait for the image files
 				}
 			}
 			else
 			{
-				if(UVSS_Read(UVSS_IMAGE))//image files are ready one by one, read all 12+1 of them
-				{
-					SP_UVSS(2);//call the stored procedure to notify that the files are ready
-					VEHICLE_Ready = 0;
-					LP_Arrived = 0;
-					CAR_Ready = 0;//start over for the next car
-				}
+                img_count = 0;
+				while(img_count < 12){
+                    if(UVSS_Read(UVSS_IMAGE) == 1)//image files are ready one by one, read all 12+1 of them
+                    {
+                        //burasının çalışması için önce stored procedure düzeltilmeli
+                        //SP_UVSS(2);//call the stored procedure to notify that the files are ready
+                        //VEHICLE_Ready = 0;
+                        //LP_Arrived = 0;
+                        //CAR_Ready = 0;//start over for the next car
+                        img_count++;
+                    }
+                }
+                printf("\nUVSS_PROCESS_OVER\n");
+                VEHICLE_Ready = 0;
+                LP_Arrived = 0;
+                CAR_Ready = 0;//start over for the next car
 			}
 		}
 		break;
