@@ -60,6 +60,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="admin.h" />
+		<Unit filename="chkcfg.h" />
 		<Unit filename="cn56b.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -72,6 +73,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="config.h" />
+		<Unit filename="des.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="des.h" />
+		<Unit filename="descfg.h" />
 		<Unit filename="ftp.c">
 			<Option compilerVar="CC" />
 		</Unit>

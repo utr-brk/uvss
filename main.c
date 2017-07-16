@@ -58,6 +58,24 @@
 
 //0.0.1
 #include "uvss.h"
+#include "des.h"
+
+static const unsigned char des3_test_buf[8] =
+{
+    //0x4E, 0x6F, 0x77, 0x20, 0x69, 0x73, 0x20, 0x74
+0xab, 0xcd, 0xef, 0x12, 0x34, 0x56, 0x78, 0x90
+
+	//0x1e, 0x90, 0xa7, 0x88, 0x63, 0xfe, 0xa4, 0x2b
+};
+
+	static const unsigned char des3_test_keys[24] =
+{
+    //0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
+    0x12, 0x34, 0x56, 0x78, 0x00, 0x00, 0x00, 0x00,
+
+    0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01,
+    0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01, 0x23
+};
 
 char HTTP_RESET;
 
@@ -211,6 +229,30 @@ int main_solidus(void)
 
 //2.0.0
     unsigned char SerNo[8];
+
+    //3.0.0
+        mbedtls_des_context ctx;
+		unsigned char buf[8];
+		printf("DES deneme\n");
+		//t=AccTimer_SetTime(0);
+
+		mbedtls_des_init(&ctx);
+		memcpy( buf, des3_test_buf, 8 );
+
+		//set decryption key
+		//mbedtls_des_setkey_dec( &ctx, des3_test_keys );
+
+		//set encryption key
+        mbedtls_des_setkey_enc( &ctx, des3_test_keys );
+
+		mbedtls_des_crypt_ecb( &ctx, buf, buf );
+		mbedtls_des_free( &ctx );
+		//printf("DES done\n");
+		//t=AccTimer_GetTime(t);
+		printf("DES done\n");
+		//printf("MS:%lu\r\n",t);
+
+		return 1;
 
     signal(SIGINT, INThandler);
 

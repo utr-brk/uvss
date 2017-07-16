@@ -140,7 +140,7 @@ void CONFIG_Load(void)
         rec_TERM.PORT_SERVER = (unsigned long) ini_getl("BAGLANTI", "PORT", 4444, AYARLAR_INI);
 
         //3.0.0
-        ini_gets("ARAC_ALTI", "SERVER", "192.168.1.216", rec_UVSS.IP_UVSS, sizearray(rec_UVSS.IP_UVSS), AYARLAR_INI);
+        ini_gets("ARAC_ALTI", "IP", "192.168.1.216", rec_UVSS.IP_UVSS, sizearray(rec_UVSS.IP_UVSS), AYARLAR_INI);
         rec_UVSS.PORT_UVSS = (unsigned long) ini_getl("ARAC_ALTI", "PORT", 1969, AYARLAR_INI);
 
         rec_TERM.READERS[0].AKTIF = (char) ini_getl("OKUYUCU1", "AKTIF", 1, AYARLAR_INI);
@@ -558,7 +558,7 @@ void	CONFIG_Save(void)
     ini_putl("BAGLANTI", "PORT", rec_TERM.PORT_SERVER, AYARLAR_INI);
 
     //3.0.0
-    ini_puts("ARAC_ALTI", "SERVER", rec_UVSS.IP_UVSS, AYARLAR_INI);
+    ini_puts("ARAC_ALTI", "IP", rec_UVSS.IP_UVSS, AYARLAR_INI);
     ini_putl("ARAC_ALTI", "PORT", rec_UVSS.PORT_UVSS, AYARLAR_INI);
 
     ini_putl("OKUYUCU1", "AKTIF", rec_TERM.READERS[0].AKTIF, AYARLAR_INI);
