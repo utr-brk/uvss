@@ -56,8 +56,9 @@
 //2.0.0
 #include "cn56b.h"
 
-//0.0.1
+//3.0.0
 #include "uvss.h"
+/*
 #include "des.h"
 
 static const unsigned char des3_test_buf[8] =
@@ -76,7 +77,7 @@ static const unsigned char des3_test_buf[8] =
     0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01,
     0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01, 0x23
 };
-
+*/
 char HTTP_RESET;
 
 volatile sig_atomic_t sig_flag = 0;
@@ -229,7 +230,7 @@ int main_solidus(void)
 
 //2.0.0
     unsigned char SerNo[8];
-
+/*
     //3.0.0
         mbedtls_des_context ctx;
 		unsigned char buf[8];
@@ -253,7 +254,7 @@ int main_solidus(void)
 		//printf("MS:%lu\r\n",t);
 
 		return 1;
-
+*/
     signal(SIGINT, INThandler);
 
     while(gtk_events_pending())
@@ -391,7 +392,7 @@ int main_solidus(void)
         gtk_printf(label1, "%s\nYEMEKHANE TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
     else if(rec_TERM.TERM_TIP == TERM_KAPI)
         gtk_printf(label1, "%s\nKAPI TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
-    //0.0.1
+    //3.0.0
     else if(rec_TERM.TERM_TIP == TERM_UVSS)
         gtk_printf(label1, "%s\nARAÇ ALTI TERMİNALİ\n%s", PROG_VER, rec_TERM.IP_TERM);
     else
@@ -466,7 +467,7 @@ LOOP:
     {
         while(gtk_events_pending())
             gtk_main_iteration();
-        //0.0.1
+        //3.0.0
         if(rec_TERM.TERM_TIP == TERM_UVSS)
             UVSS_Karsila();
         else if(rezervasyon)

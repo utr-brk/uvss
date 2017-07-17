@@ -28,7 +28,7 @@
 #include "log.h"
 #include "tcp.h"
 
-//0.0.1
+//3.0.0
 //#include "watchdt.h"
 #include "personel.h"
 //#include "resource.h"

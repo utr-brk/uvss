@@ -94,6 +94,9 @@ uint8_t  HB_Blok;
 //2.4.0
 int KAPI_TCP_WAIT_TIME;
 
+//3.0.0
+int KEY_DIVERSITY;
+
 void CONFIG_Load(void)
 {
     FILE *inp;
@@ -128,7 +131,7 @@ void CONFIG_Load(void)
         //brk
         //unutma kaldır
         //0.0.1
-        rec_TERM.TERM_TIP = TERM_UVSS;
+        //rec_TERM.TERM_TIP = TERM_UVSS;
         ini_gets("TERMINAL", "KAPIKODU", "000", rec_TERM.KAPI_KOD, sizearray(rec_TERM.KAPI_KOD), AYARLAR_INI);
 
         ini_gets("BAGLANTI", "IP", "192.168.1.150", rec_TERM.IP_TERM, sizearray(rec_TERM.IP_TERM), AYARLAR_INI);
@@ -219,6 +222,9 @@ void CONFIG_Load(void)
 
         //2.4.0
         KAPI_TCP_WAIT_TIME = (int) ini_getl("SURELER", "KAPI_TCP_BEKLEME_SURESI", 2, AYARLAR_INI);
+
+        //3.0.0
+        KEY_DIVERSITY = (int) ini_getl("TERMINAL", "DAGITIK_ANAHTAR_AKTIF", 0, AYARLAR_INI);
 
         rec_YAZICI.AKTIF = (char) ini_getl("YAZICI", "AKTIF", 0, AYARLAR_INI);
         ini_gets("YAZICI", "ACIKLAMA1", "UTARIT UNIVERSITE YEMEKHANE TERMINALI", rec_YAZICI.ACIKLAMA1, sizearray(rec_YAZICI.ACIKLAMA1), AYARLAR_INI);
@@ -660,6 +666,9 @@ void	CONFIG_Save(void)
 
     //2.4.0
     ini_putl("SURELER", "KAPI_TCP_BEKLEME_SURESI", KAPI_TCP_WAIT_TIME, AYARLAR_INI);
+
+    //3.0.0
+    ini_putl("TERMINAL", "DAGITIK_ANAHTAR_AKTIF", KEY_DIVERSITY, AYARLAR_INI);
 
     ini_putl("YAZICI", "AKTIF", rec_YAZICI.AKTIF, AYARLAR_INI);
     ini_puts("YAZICI", "ACIKLAMA1", rec_YAZICI.ACIKLAMA1, AYARLAR_INI);

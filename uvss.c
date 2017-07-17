@@ -25,7 +25,7 @@
 #include "log.h"
 #include "tcp.h"
 
-//0.0.1
+//3.0.0
 //#include "watchdt.h"
 #include "personel.h"
 //#include "resource.h"
@@ -506,7 +506,7 @@ int SP_UVSS(int sp_type)
 
 		if(sp_type == 1){
             memset(REF_IMAGE_FILE, 0, 500);
-            strcpy(REF_IMAGE_FILE, org_file_name);
+            strcpy(REF_IMAGE_FILE, (char *)org_file_name);
         }
 
 		if(sp_ret == SQL_ERROR)

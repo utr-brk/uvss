@@ -997,13 +997,23 @@ versiyon SOLI-TERM 2.5.3
 tcp_connect'de bir yerde socket kapatılmamıştı, kapatıldı.
 
 **************************
-versiyon SOLI-TERM UVSS 0.0.1
+versiyon SOLI-TERM 2.6.0
+11/07/2017
+yazıcıdan baskı alırken buffer overflow oluyordu, kontrol edilip duzeltildi
+
+**************************
+versiyon SOLI-TERM UVSS 3.0.0
 05/07/2017
 UVSS için değiştirilen versiyon.
+Terminal Tipi Araç Altı eklendi.
+
+Ayrıca eğer Dağıtık Anahtarlama Aktif ise tüm keyler kart numarası ile 3DES şifrelenerek kullanılır.
+Böylelikle her kartın key'i kendisine özel olur.
+
 */
 
 #pragma pack(push,1)
-#define	PROG_VER "SOLI-TERM UVSS 0.0.1"
+#define	PROG_VER "SOLI-TERM UVSS 3.0.0"
 
 
 typedef struct

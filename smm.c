@@ -18,6 +18,9 @@
 #include "cn56b.h"
 //2.2.2
 #include "minini.h"
+//3.0.0
+#include "des.h"
+
 #define   HATA_LOG "/home/odroid/Solidus/Hata.Log"
 int SMM_PORT;
 //2.2.0
@@ -35,6 +38,23 @@ extern unsigned char YB_Blok;
 extern unsigned char HB_Blok;
 */
 
+/*
+//3.0.0
+static const unsigned char des3_test_buf[8] =
+{
+    //0x4E, 0x6F, 0x77, 0x20, 0x69, 0x73, 0x20, 0x74
+    0xab, 0xcd, 0xef, 0x12, 0x34, 0x56, 0x78, 0x90
+	//0x1e, 0x90, 0xa7, 0x88, 0x63, 0xfe, 0xa4, 0x2b
+};
+
+	static const unsigned char des3_test_keys[24] =
+{
+    //0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF,
+    0x12, 0x34, 0x56, 0x78, 0x00, 0x00, 0x00, 0x00,
+    0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01,
+    0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF, 0x01, 0x23
+};
+*/
 void Str2Hex(unsigned char *in, int len, unsigned char *out)
 {
     int i;
@@ -190,7 +210,46 @@ unsigned char SMM_WritePacked(int Port,struct_SMM_PACKED *Packed)
     return SMM_ERR_NONE;
 }
 
+void Set_Keys_3DES(unsigned char *data, unsigned char len)
+{
+mbedtls_des_context ctx;
+unsigned char buf[8];
 
+    mbedtls_des_init(&ctx);
+    memset(buf, 0, 8);
+    memcpy(buf,data,len);
+    //set decryption key
+    //mbedtls_des_setkey_dec( &ctx, des3_test_keys );
+
+    //sets card no as encryption key
+    mbedtls_des_setkey_enc( &ctx, buf);
+    //sets the value to crypt
+    memset(buf, 0, 8);
+    memcpy(buf, rec_TERM.KEY_MASTER, 6);
+    mbedtls_des_crypt_ecb( &ctx, buf, buf );
+    memcpy(rec_TERM.KEY_MASTER, buf, 6);
+
+    //sets the value to crypt
+    memset(buf, 0, 8);
+    memcpy(buf, rec_TERM.KEY_BAKIYE, 6);
+    mbedtls_des_crypt_ecb( &ctx, buf, buf );
+    memcpy(rec_TERM.KEY_BAKIYE, buf, 6);
+
+    //sets the value to crypt
+    memset(buf, 0, 8);
+    memcpy(buf, rec_TERM.KEY_PERSONEL, 6);
+    mbedtls_des_crypt_ecb( &ctx, buf, buf );
+    memcpy(rec_TERM.KEY_PERSONEL, buf, 6);
+
+    //sets the value to crypt
+    memset(buf, 0, 8);
+    memcpy(buf, rec_TERM.KEY_TOPUP, 6);
+    mbedtls_des_crypt_ecb( &ctx, buf, buf );
+    memcpy(rec_TERM.KEY_TOPUP, buf, 6);
+
+
+    mbedtls_des_free( &ctx );
+}
 
 unsigned char SMM_ReadCard_Tmp(unsigned char *KartNo)
 {
@@ -202,6 +261,11 @@ unsigned char SMM_ReadCard_Tmp(unsigned char *KartNo)
     static unsigned char smm_RESET[2]= {0,0};
 //	static unsigned char smm_SEEK[2]={0,0}; //5.6.0 seek etmiyor artk
 
+/*
+    //3.0.0
+    mbedtls_des_context ctx;
+    unsigned char buf[8];
+*/
 
     /* int qq = 0;
     while(qq != 'A'){
@@ -292,6 +356,34 @@ unsigned char SMM_ReadCard_Tmp(unsigned char *KartNo)
             memcpy(KartNo,Packed.DATA+1,4);
             //smm_SEEK[SMM_PORT]=0; //5.6.0 seek etmiyor artik
             ret=SMM_ERR_NONE;
+
+            //3.0.0
+            if(KEY_DIVERSITY){
+                Set_Keys_3DES(Packed.DATA+1, Packed.LEN-2);
+                /*
+                mbedtls_des_init(&ctx);
+                memset(buf, 0, 8);
+                memcpy(buf,Packed.DATA+1,Packed.LEN-2);
+                //sets card no as encryption key
+                mbedtls_des_setkey_enc( &ctx, buf);
+                //sets the value to crypt
+                memcpy(buf, rec_TERM.KEY_BAKIYE, 8);
+                //memcpy(buf,Packed.DATA+1,Packed.LEN-2);
+                //memcpy( buf, des3_test_buf, 8 );
+
+                //set decryption key
+                //mbedtls_des_setkey_dec( &ctx, des3_test_keys );
+
+                //set encryption key
+                //mbedtls_des_setkey_enc( &ctx, des3_test_keys );
+                //mbedtls_des_setkey_enc( &ctx, rec_TERM.KEY_BAKIYE);
+
+
+                mbedtls_des_crypt_ecb( &ctx, buf, buf );
+                memcpy(rec_TERM.KEY_BAKIYE, buf, 8);
+                mbedtls_des_free( &ctx );
+                */
+            }
         }
         else
         {

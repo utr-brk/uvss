@@ -35,9 +35,9 @@
 #endif
 
 #include <stddef.h>
-//#include <stdint.h>
+#include <stdint.h>
 
-#define uint32_t unsigned long
+//#define uint32_t unsigned long
 
 #define MBEDTLS_DES_ENCRYPT     1
 #define MBEDTLS_DES_DECRYPT     0

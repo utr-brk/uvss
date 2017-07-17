@@ -9,10 +9,11 @@
 #define	TERM_KAPI		0x01
 #define TERM_PARA       0x02
 #define TERM_HARCAMA    0x03
-//0.0.1
+//3.0.0
 //TERM_BAKIYE           0x04
 //TERM_SOSYALTESIS      0x05
-#define TERM_UVSS       0x06
+//TERM_BISIKLET         0x06
+#define TERM_UVSS       0x07
 
 //aslinda buraya havuz giris ve
 //havuz cikis terminalleri eklenebilirdi.
@@ -98,9 +99,11 @@ typedef struct
 {
     char	AKTIF;
     char 	TIP; //POS/CUSTOM
-    char  	ACIKLAMA1[24];
-    char  	ACIKLAMA2[24];
-    char  	ACIKLAMA3[24];
+    //2.6.0
+    //overflow olmasın diye 24 iken 44 yapıldılar
+    char  	ACIKLAMA1[44];
+    char  	ACIKLAMA2[44];
+    char  	ACIKLAMA3[44];
     //int  	KART_NO_BAS;//6.3.1
     //int		TIP; //0: POS, 1: EXTERNAL
     //char 	KART_NO_BAS[10]; //BAS/BASMA
@@ -232,6 +235,9 @@ extern  GtkWidget *txtBarcode;
 
 //2.4.0
 extern int KAPI_TCP_WAIT_TIME;
+
+//3.0.0
+extern int KEY_DIVERSITY;
 
 #pragma pack(pop)
 #endif // CONFIG_H_INCLUDED
