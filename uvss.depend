@@ -17,7 +17,7 @@
 	<ncurses.h>
 	<gtk/gtk.h>
 
-1500281652 /home/odroid/brk/uvss/config.h
+1500292527 /home/odroid/brk/uvss/config.h
 	<gtk/gtk.h>
 
 1453988970 /home/odroid/brk/uvss/mesaj.h
@@ -25,7 +25,7 @@
 1499427310 /home/odroid/brk/uvss/personel.h
 	"main.h"
 
-1499427309 /home/odroid/brk/uvss/main.h
+1500292526 /home/odroid/brk/uvss/main.h
 	"stdint.h"
 
 1500284307 source:/home/odroid/brk/uvss/config.c
@@ -115,7 +115,7 @@
 	<signal.h>
 	<malloc.h>
 
-1500282685 source:/home/odroid/brk/uvss/main.c
+1500290180 source:/home/odroid/brk/uvss/main.c
 	<gtk/gtk.h>
 	<sys/socket.h>
 	<sys/types.h>
@@ -191,7 +191,7 @@
 	<string.h>
 	<stdlib.h>
 
-1499683352 source:/home/odroid/brk/uvss/personel.c
+1500290181 source:/home/odroid/brk/uvss/personel.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
@@ -306,7 +306,7 @@
 	<time.h>
 	"tool.h"
 
-1499683353 source:/home/odroid/brk/uvss/zamanis.c
+1500290181 source:/home/odroid/brk/uvss/zamanis.c
 	<stdio.h>
 	<time.h>
 	<string.h>
@@ -356,7 +356,7 @@
 	<sys/stat.h>
 	"wiringSerial.h"
 
-1500287665 source:/home/odroid/brk/uvss/smm.c
+1500289961 source:/home/odroid/brk/uvss/smm.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -2969,7 +2969,7 @@
 
 1451427094 /home/odroid/brk/uvss/yazici.h
 
-1499427312 source:/home/odroid/brk/uvss/yazici.c
+1500292379 source:/home/odroid/brk/uvss/yazici.c
 	<stdlib.h>
 	<string.h>
 	<time.h>
@@ -3005,7 +3005,7 @@
 
 1499698502 /home/odroid/brk/uvss/uvss.h
 
-1500049912 source:/home/odroid/brk/uvss/uvss.c
+1500296457 source:/home/odroid/brk/uvss/uvss.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>

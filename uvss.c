@@ -482,8 +482,6 @@ int SP_UVSS(int sp_type)
 		if(sp_type == 1)
             //strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
             strcpy(dosya_ismi, LP_FILE_NAME);//comes from bora
-        else
-            memset(dosya_ismi, 0, 500);
 
 		strcpy(terminal_kodu, rec_TERM.KAPI_KOD);
 		strcpy(terminal_ip, rec_TERM.IP_TERM);
@@ -565,9 +563,10 @@ int len=0, img_count;
                 len = q2-q1;
                 memcpy(LPN, q1, len);
                 LPN[len] = '\0';
-
+                printf("\nLicence Plate: %s\n", LPN);
 				if(SP_UVSS(1)) //call the stored procedure to get the ref image file name (if exists)
 				{
+                    printf("REF FILE: %s\n", REF_IMAGE_FILE);
 					UVSS_Send(REF_IMAGE);//send the corresponding reference image file name, what happens if it fails?
 				}
 			}
@@ -595,9 +594,11 @@ int len=0, img_count;
                         //LP_Arrived = 0;
                         //CAR_Ready = 0;//start over for the next car
                         img_count++;
+                        printf("\nUVSS_IMAGE[%d]: %s\n", img_count, UVSS_FILE_NAME);
                     }
                 }
                 printf("\nUVSS_PROCESS_OVER\n");
+                SP_UVSS(2);//call the stored procedure to notify that the files are ready
                 VEHICLE_Ready = 0;
                 LP_Arrived = 0;
                 CAR_Ready = 0;//start over for the next car
