@@ -508,7 +508,7 @@ int SP_UVSS(int sp_type)
 		printf("\nislem: %d\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", sp_type, org_file_name, hgs_tag, sonuc);
 
 		if(sp_type == 1){
-            memset(REF_IMAGE_FILE, 0, 500);
+            memset(REF_IMAGE_FILE, 0, 256);
             strcpy(REF_IMAGE_FILE, (char *)org_file_name);
         }
 

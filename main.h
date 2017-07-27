@@ -1003,12 +1003,20 @@ yazıcıdan baskı alırken buffer overflow oluyordu, kontrol edilip duzeltildi
 
 **************************
 versiyon SOLI-TERM UVSS 3.0.0
-05/07/2017
+27/07/2017
 UVSS için değiştirilen versiyon.
 Terminal Tipi Araç Altı eklendi.
 
 Ayrıca eğer Dağıtık Anahtarlama Aktif ise tüm keyler kart numarası ile 3DES şifrelenerek kullanılır.
 Böylelikle her kartın key'i kendisine özel olur.
+
+Keypad aktif değilse tuş takımından TCKimlik No almaya uğraşmaz.
+Eğer extra röle ve sens takılıysa, cihazın yemekhane ve kapı modunda olmaması gerekir,
+çünkü bu modlarda personel_izinal çalışıyor ve kullanıcıdan misafir fiyatının onaylanması için
+enter'a basması isteniyor. extra röle/sens varken tuş takımı kullanılamaz.
+ayarlar.php'nin 3.1.0 versiyonu ve relay3send.php, ..., relay7send.php ile senseread.php'nin yeni versiyonu
+terminalde /var/www/html dizini altında bulunmalı.
+keypad'in column'ları röle (3-7), row'ları ise sense (3-6) olarak kullanılıyor.
 
 */
 

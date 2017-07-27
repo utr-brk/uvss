@@ -3002,6 +3002,11 @@ int TCKimlikAl(char *data)
     int key, i;
     char sifre[12];
 
+    //3.0.0
+    //keypad aktif değilse tckimlik okumaya uğraşma ki extra röleler bozulmasın
+    if(!KEYPAD_AKTIF)
+        return 1;
+
     key=KEYB_getch(1);
     if(key== 0xF4)
     {
