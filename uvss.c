@@ -77,6 +77,7 @@
 #define LP_IMAGE        11
 #define UVSS_IMAGE      12
 #define REF_IMAGE       13
+#define ERR_MSG         14
 
 int CAR_Ready = 0;
 int LP_Arrived = 0;
@@ -89,6 +90,7 @@ int uvss_socket = -1;
 char REF_IMAGE_FILE[256];
 char LP_FILE_NAME[256];
 char UVSS_FILE_NAME[256];
+char ERR_MESSAGE[256];
 
 char LPN[24];//license plate number
 /*
@@ -309,12 +311,15 @@ int UVSS_Read(int msg_type)
 		case UVSS_IMAGE:
 			memcpy(UVSS_FILE_NAME, rcv_file, rcv_file_len);
 			break;
+        case ERR_MSG:
+			memcpy(ERR_MESSAGE, rcv_file, rcv_file_len);
+			break;
 		}
 	}
 	//free(szBuf);
 	free(strRcv);
 	return retval;
-	//return 1;
+	//return 1;//brk
 }
 /*
 int SP_UVSS(int sp_type)
@@ -477,14 +482,14 @@ int SP_UVSS(int sp_type)
 		memset(dosya_ismi, 0, 500);
 		memset(terminal_kodu, 0, 3);
 		memset(terminal_ip, 0, 15);
-		strcpy(plaka_no, LPN);
+		strcpy((char *)plaka_no, LPN);
 
 		if(sp_type == 1)
             //strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
-            strcpy(dosya_ismi, LP_FILE_NAME);//comes from bora
+            strcpy((char *)dosya_ismi, LP_FILE_NAME);//comes from bora
 
-		strcpy(terminal_kodu, rec_TERM.KAPI_KOD);
-		strcpy(terminal_ip, rec_TERM.IP_TERM);
+		strcpy((char *)terminal_kodu, rec_TERM.KAPI_KOD);
+		strcpy((char *)terminal_ip, rec_TERM.IP_TERM);
 		islem = sp_type;
 
         memset(sonuc, 0, 50);
@@ -535,7 +540,7 @@ int SP_UVSS(int sp_type)
 void UVSS_Karsila(void)
 {
 char *q1, *q2;
-int len=0, img_count;
+int len=0;//, img_count;
     if(!UVSS_ON){
         uvss_socket = TCP_Connect(rec_UVSS.IP_UVSS, rec_UVSS.PORT_UVSS);
         if(uvss_socket > 0)
@@ -557,7 +562,6 @@ int len=0, img_count;
 		{
 			if(UVSS_Read(LP_IMAGE) == 1)//try to read the lp image file name "C:\UTARIT\2017\7\13\PTSG_06ey4300_13072017161622.jpg"
 			{
-				LP_Arrived = 1;
 				q1 = strstr(LP_FILE_NAME, "PTSG_") + 5;
                 q2 = strstr(q1, "_");
                 len = q2-q1;
@@ -584,6 +588,7 @@ int len=0, img_count;
 			}
 			else
 			{
+                /*
                 img_count = 0;
 				while(img_count < 12){
                     if(UVSS_Read(UVSS_IMAGE) == 1)//image files are ready one by one, read all 12+1 of them
@@ -597,11 +602,14 @@ int len=0, img_count;
                         printf("\nUVSS_IMAGE[%d]: %s\n", img_count, UVSS_FILE_NAME);
                     }
                 }
-                printf("\nUVSS_PROCESS_OVER\n");
-                SP_UVSS(2);//call the stored procedure to notify that the files are ready
-                VEHICLE_Ready = 0;
-                LP_Arrived = 0;
-                CAR_Ready = 0;//start over for the next car
+                */
+                if(UVSS_Read(UVSS_IMAGE) == 1){
+                    printf("\nUVSS_PROCESS_OVER\n");
+                    SP_UVSS(2);//call the stored procedure to notify that the arac altı goruntusu ready
+                    VEHICLE_Ready = 0;
+                    LP_Arrived = 0;
+                    CAR_Ready = 0;//start over for the next car
+                }
 			}
 		}
 		break;
