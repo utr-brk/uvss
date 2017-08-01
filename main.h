@@ -1018,10 +1018,15 @@ ayarlar.php'nin 3.1.0 versiyonu ve relay3send.php, ..., relay7send.php ile sense
 terminalde /var/www/html dizini altında bulunmalı.
 keypad'in column'ları röle (3-7), row'ları ise sense (3-6) olarak kullanılıyor.
 
+
+**************************
+versiyon SOLI-TERM UVSS 3.1.0
+01/08/2017
+Key Divesification hatalı idi, her seferinde key'leri değiştiriyordu, düzeltildi.
 */
 
 #pragma pack(push,1)
-#define	PROG_VER "SOLI-TERM UVSS 3.0.0"
+#define	PROG_VER "SOLI-TERM UVSS 3.1.0"
 
 
 typedef struct

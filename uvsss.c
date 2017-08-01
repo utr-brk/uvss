@@ -148,7 +148,6 @@ int UVSS_Vehicle_Check(int IN_OUT)
 		break;
 	}
 	return retval;
-	//brk
 	//return 1;
 }
 
@@ -499,9 +498,9 @@ int SP_UVSS(int sp_type)
         memset(org_file_name, 0, 500);
         memset(hgs_tag, 0, 50);
 
-//printf("about to call SP\n");
+
 		sp_ret = SQLExecDirect(h_sp_stmt, (SQLCHAR*)"{?=call PRO01_SBT.DBO.SP_ARAC_ALTI_SISTEMI(?,?,?,?,?)}", SQL_NTS);
-//printf("SP executed\n");
+
 		ret = SQLBindCol(h_sp_stmt, 1, SQL_C_CHAR, (SQLPOINTER)sonuc, 50, &l1);
 		ret = SQLBindCol(h_sp_stmt, 2, SQL_C_CHAR, (SQLPOINTER)org_file_name, 500, &l2);
 		ret = SQLBindCol(h_sp_stmt, 3, SQL_C_CHAR, (SQLPOINTER)hgs_tag, 50, &l3);

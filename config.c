@@ -97,6 +97,9 @@ int KAPI_TCP_WAIT_TIME;
 //3.0.0
 int KEY_DIVERSITY;
 
+//3.1.0
+struct_KEY rec_KEYS;
+
 void CONFIG_Load(void)
 {
     FILE *inp;
@@ -119,6 +122,9 @@ void CONFIG_Load(void)
 
     //3.0.0
     memset(&rec_UVSS,0x00,sizeof(rec_UVSS));
+
+    //3.1.0
+    memset(&rec_KEYS,0x00,sizeof(struct_KEY));
 
     if(access(AYARLAR_INI, 0) == 0)
     {
@@ -534,6 +540,14 @@ void CONFIG_Load(void)
     //rec_TERM.TERM_TIP = TERM_HARCAMA;
     //strcpy(rec_TERM.IP_SERVER,"10.10.10.1");
     //rec_TERM.PORT_SERVER = 4444;
+
+    //3.1.0
+    if(KEY_DIVERSITY){
+        memcpy(rec_KEYS.BAKIYE, rec_TERM.KEY_BAKIYE, 6);
+        memcpy(rec_KEYS.MASTER, rec_TERM.KEY_MASTER, 6);
+        memcpy(rec_KEYS.PERSONEL, rec_TERM.KEY_PERSONEL, 6);
+        memcpy(rec_KEYS.TOPUP, rec_TERM.KEY_TOPUP, 6);
+    }
 }
 
 
@@ -720,9 +734,17 @@ void	CONFIG_Save(void)
     if(rec_TERM.TERM_TIP != TERM_PARA)
     {
         out=fopen(MASTER_KEY,"a+b");
-        fwrite(rec_TERM.KEY_BAKIYE,6,1,out);
-        fwrite(rec_TERM.KEY_TOPUP,6,1,out);
-        fwrite(rec_TERM.KEY_PERSONEL,6,1,out);
+        //3.1.0
+        if(!KEY_DIVERSITY){
+            fwrite(rec_TERM.KEY_BAKIYE,6,1,out);
+            fwrite(rec_TERM.KEY_TOPUP,6,1,out);
+            fwrite(rec_TERM.KEY_PERSONEL,6,1,out);
+        }else
+        {
+            fwrite(rec_KEYS.BAKIYE,6,1,out);
+            fwrite(rec_KEYS.TOPUP,6,1,out);
+            fwrite(rec_KEYS.PERSONEL,6,1,out);
+        }
         fclose(out);
     }
     if((Para_Sektor >3) && (Para_Sektor < 10)) //0.1.0 standard sektorlerse sektor.dat yapma

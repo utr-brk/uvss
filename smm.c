@@ -225,25 +225,33 @@ unsigned char buf[8];
     mbedtls_des_setkey_enc( &ctx, buf);
     //sets the value to crypt
     memset(buf, 0, 8);
-    memcpy(buf, rec_TERM.KEY_MASTER, 6);
+    //3.1.0
+    //memcpy(buf, rec_TERM.KEY_MASTER, 6);
+    memcpy(buf, rec_KEYS.MASTER, 6);
     mbedtls_des_crypt_ecb( &ctx, buf, buf );
     memcpy(rec_TERM.KEY_MASTER, buf, 6);
 
     //sets the value to crypt
     memset(buf, 0, 8);
-    memcpy(buf, rec_TERM.KEY_BAKIYE, 6);
+    //3.1.0
+    //memcpy(buf, rec_TERM.KEY_BAKIYE, 6);
+    memcpy(buf, rec_KEYS.BAKIYE, 6);
     mbedtls_des_crypt_ecb( &ctx, buf, buf );
     memcpy(rec_TERM.KEY_BAKIYE, buf, 6);
 
     //sets the value to crypt
     memset(buf, 0, 8);
-    memcpy(buf, rec_TERM.KEY_PERSONEL, 6);
+    //3.1.0
+    //memcpy(buf, rec_TERM.KEY_PERSONEL, 6);
+    memcpy(buf, rec_KEYS.PERSONEL, 6);
     mbedtls_des_crypt_ecb( &ctx, buf, buf );
     memcpy(rec_TERM.KEY_PERSONEL, buf, 6);
 
     //sets the value to crypt
     memset(buf, 0, 8);
-    memcpy(buf, rec_TERM.KEY_TOPUP, 6);
+    //3.1.0
+    //memcpy(buf, rec_TERM.KEY_TOPUP, 6);
+    memcpy(buf, rec_KEYS.TOPUP, 6);
     mbedtls_des_crypt_ecb( &ctx, buf, buf );
     memcpy(rec_TERM.KEY_TOPUP, buf, 6);
 

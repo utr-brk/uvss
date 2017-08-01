@@ -36,6 +36,9 @@
 //2.2.7
 #include "main.h"
 
+//3.1.0
+#include "uvss.h"
+
 //#define DEVICE_NAME "/dev/ttyS2"
 
 //2.5.2
@@ -329,7 +332,9 @@ char RFID_Read(int Port, unsigned char *CardNum, unsigned char *CardNumHex)
 char READER_Read(void)
 {
     int r,i,k;
-    unsigned char ret = 0xFF;//Sector,Block;
+    //3.1.0
+    //unsigned char ret = 0xFF;//Sector,Block;
+    unsigned char ret = SMM_ERR_CARDNONE;//hata ile değil kart yok ile başla
     unsigned char *KartNo;//m8110 unsigned char idi
     unsigned char *KartNoHex;//m8110 unsigned char idi
 
@@ -1033,9 +1038,9 @@ void READER_Uninit(int com_port)
         ifd [com_port]= -1;
     }
 
-    //3.0.0
-    //if(uvss_socket > 0)
-    //    close(uvss_socket);
+    //3.1.0
+    if(uvss_socket > 0)
+        close(uvss_socket);
 }
 
 

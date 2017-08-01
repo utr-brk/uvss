@@ -147,7 +147,21 @@ typedef struct
     unsigned long	PORT_UVSS;
 } struct_UVSS;
 
-extern struct_AYARLAR rec_Ayarlar;
+//3.1.0
+//key diversification varsa
+//orijinal keyler bozulmasın diye
+typedef struct
+{
+    unsigned char PERSONEL[6];
+    unsigned char BAKIYE[6];
+    unsigned char TOPUP[6];
+    unsigned char MASTER[6];
+
+}struct_KEY;
+//3.1.0
+extern struct_KEY       rec_KEYS;
+
+extern struct_AYARLAR   rec_Ayarlar;
 
 extern struct_PINPAD	rec_PINPAD;
 extern struct_YAZICI 	rec_YAZICI;

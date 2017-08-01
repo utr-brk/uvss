@@ -35,8 +35,8 @@
 					<Add option="-Wcast-align" />
 					<Add option="-Wundef" />
 					<Add option="-Wunreachable-code" />
-					<Add option="-Wall" />
 					<Add option="-Wno-unused-result" />
+					<Add option="-Wall" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
