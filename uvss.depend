@@ -230,7 +230,7 @@
 
 1448332542 /home/odroid/brk/uvss/string_convert.h
 
-1501585508 source:/home/odroid/brk/uvss/reader.c
+1501591467 source:/home/odroid/brk/uvss/reader.c
 	<stdlib.h>
 	<string.h>
 	"reader.h"
@@ -246,6 +246,7 @@
 	"admin.h"
 	"serport.h"
 	"main.h"
+	"uvss.h"
 	"errno.h"
 
 1499427312 source:/home/odroid/brk/uvss/resource.c
@@ -3003,9 +3004,9 @@
 	<stdint.h>
 	"smm.h"
 
-1499698502 /home/odroid/brk/uvss/uvss.h
+1501591565 /home/odroid/brk/uvss/uvss.h
 
-1501506390 source:/home/odroid/brk/uvss/uvss.c
+1501690754 source:/home/odroid/brk/uvss/uvss.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>

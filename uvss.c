@@ -303,20 +303,24 @@ int UVSS_Read(int msg_type)
 	else
 		retval = -1;
 
+
 	if(retval == 1)
 	{
-		switch(msg_type)
-		{
-		case LP_IMAGE:
-			memcpy(LP_FILE_NAME, rcv_file, rcv_file_len);
-			break;
-		case UVSS_IMAGE:
-			memcpy(UVSS_FILE_NAME, rcv_file, rcv_file_len);
-			break;
-        case ERR_MSG:
-			memcpy(ERR_MESSAGE, rcv_file, rcv_file_len);
-			break;
-		}
+        if(strRcv[1] == ERR_MSG){
+            memcpy(ERR_MESSAGE, rcv_file, rcv_file_len);
+            if(msg_type != ERR_MSG)
+                retval = -1;
+        }else{
+            switch(msg_type)
+            {
+            case LP_IMAGE:
+                memcpy(LP_FILE_NAME, rcv_file, rcv_file_len);
+                break;
+            case UVSS_IMAGE:
+                memcpy(UVSS_FILE_NAME, rcv_file, rcv_file_len);
+                break;
+            }
+        }
 	}
 	//free(szBuf);
 	free(strRcv);
@@ -489,7 +493,7 @@ int SP_UVSS(int sp_type)
 
 		if(sp_type == 1)
             //strcpy(dosya_ismi, "06EY4300_20170712115633.JPEG");//comes from bora
-            strcpy((char *)dosya_ismi, LP_FILE_NAME);//comes from bora
+            strcpy((char *)dosya_ismi, LP_FILE_NAME+5);//comes from bora, +5 is to skip PTSG_ part
 
 		strcpy((char *)terminal_kodu, rec_TERM.KAPI_KOD);
 		strcpy((char *)terminal_ip, rec_TERM.IP_TERM);
@@ -508,7 +512,18 @@ int SP_UVSS(int sp_type)
 		ret = SQLFetch(h_sp_stmt);
 		sp_ret = SQLNumResultCols(h_sp_stmt, &columns);
 
-		printf("\nislem: %d\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", sp_type, org_file_name, hgs_tag, sonuc);
+		//printf("\nislem: %d\norg_file_name: %s\nhgs_tag: %s\nsonuc: %s\n", sp_type, org_file_name, hgs_tag, sonuc);
+
+        if(sp_type == 1){
+        //lcd_printf_ex(ALG_CENTER, 18, "noooluyooo");
+            lcd_printf_ex(ALG_CENTER, 18, "I: %d, o_f_n: %s, h_t: %s, S: %s", sp_type, org_file_name, hgs_tag, sonuc);
+            lcd_flip();
+        }
+        else
+        if(sp_type == 2){
+            lcd_printf_ex(ALG_CENTER, 12, "Islem: %d, Sonuc: %s", sp_type, sonuc);
+            lcd_flip();
+        }
 
 		if(sp_type == 1){
             memset(REF_IMAGE_FILE, 0, 256);
@@ -555,7 +570,9 @@ int len=0;//, img_count;
 	case 0://not arrived yet
 		if(UVSS_Vehicle_Check(IN))//check the entry loop
 		{
-            printf("\nCAR_DETECTED\n");
+            lcd_clean();
+            lcd_printf_ex(ALG_CENTER, 5, "CAR_DETECTED");
+            lcd_flip();
 			if(UVSS_Send(CAR_DETECTED) == 1)//notify Bora that there starts a car. what happens if it fails
                 CAR_Ready = 1;
 		}
@@ -570,13 +587,24 @@ int len=0;//, img_count;
                 len = q2-q1;
                 memcpy(LPN, q1, len);
                 LPN[len] = '\0';
-                printf("\nLicence Plate: %s\n", LPN);
+                //printf("\nLicence Plate: %s\n", LPN);
+                lcd_printf_ex(ALG_CENTER, 7, "Licence Plate: %s", LPN);
+                lcd_flip();
+                LP_Arrived = 1;
 				if(SP_UVSS(1)) //call the stored procedure to get the ref image file name (if exists)
 				{
-                    printf("REF FILE: %s\n", REF_IMAGE_FILE);
+                    //printf("REF FILE: %s\n", REF_IMAGE_FILE);
+                    lcd_printf_ex(ALG_CENTER, 9, "REF FILE: %s", REF_IMAGE_FILE);
+                    lcd_flip();
 					UVSS_Send(REF_IMAGE);//send the corresponding reference image file name, what happens if it fails?
 				}
-			}
+			}else{
+                if(strlen(ERR_MESSAGE) > 0){
+                    //printf("ERR: %s\n", ERR_MESSAGE);
+                    lcd_printf_ex(ALG_CENTER, 20, "ERR: %s", ERR_MESSAGE);
+                    lcd_flip();
+                }
+            }
 		}
 		else
 		{
@@ -584,7 +612,9 @@ int len=0;//, img_count;
 			{
 				if(UVSS_Vehicle_Check(OUT))//check the exit loop
 				{
-                    printf("\nCAR_FINISHED\n");
+                    //printf("\nCAR_FINISHED\n");
+                    lcd_printf_ex(ALG_CENTER, 11, "CAR_FINISHED");
+                    lcd_flip();
 					UVSS_Send(CAR_FINISHED);//notify that car finished
 					VEHICLE_Ready = 1;//now car is ready, wait for the image files
 				}
@@ -607,7 +637,9 @@ int len=0;//, img_count;
                 }
                 */
                 if(UVSS_Read(UVSS_IMAGE) == 1){
-                    printf("\nUVSS_PROCESS_OVER\n");
+                    //printf("\nUVSS_PROCESS_OVER\n");
+                    lcd_printf_ex(ALG_CENTER, 13, "UVSS_PROCESS_OVER");
+                    lcd_flip();
                     SP_UVSS(2);//call the stored procedure to notify that the arac altı goruntusu ready
                     VEHICLE_Ready = 0;
                     LP_Arrived = 0;
